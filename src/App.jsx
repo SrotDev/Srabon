@@ -43,7 +43,7 @@ const App = () => {
     </Route>
   ),
   {
-    basename: "/srabon"
+    basename: "/Srabon"
   }
 );
 
