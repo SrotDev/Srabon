@@ -1,0 +1,101 @@
+/* CourseArticlePage.scss */
+.course-article-page {
+  background-color: #f9f9f9;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 1000px;
+  margin: 50px auto;
+  font-family: 'Roboto', sans-serif;
+}
+
+.article-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.article-header h1 {
+  font-size: 36px;
+  font-weight: 700;
+  color: #333;
+}
+
+.class-meta {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.class-box, .subject-box {
+  font-size: 18px;
+  color: #007bff;
+  font-weight: 500;
+}
+
+.article-content {
+  margin-top: 30px;
+}
+
+.article-content h2 {
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+}
+
+.article-text {
+  margin-top: 20px;
+  font-size: 18px;
+  color: #555;
+  line-height: 1.6;
+}
+
+.navigation-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+
+.prev-btn, .next-btn {
+  background-color: #007bff;
+  color: white;
+  padding: 12px 25px;
+  font-size: 18px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 45%;
+}
+
+.prev-btn:hover, .next-btn:hover {
+  background-color: #0056b3;
+}
+
+.prev-btn:disabled, .next-btn:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.flashcards-btn {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.flashcards-btn button {
+  background-color: #28a745;
+  color: white;
+  padding: 15px 30px;
+  font-size: 18px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.flashcards-btn button:hover {
+  background-color: #218838;
+}

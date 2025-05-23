@@ -1,0 +1,62 @@
+// src/assets/styles/scss/components/_courseCard.scss
+.course-card {
+  width: 280px;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.2s ease-in-out;
+
+  &:hover {
+    transform: translateY(-5px);
+  }
+
+  .course-image {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+  }
+
+  .course-body {
+    padding: 1rem;
+
+    .tag {
+      background: #eef6f6;
+      padding: 0.25rem 0.75rem;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #008080;
+      margin-bottom: 0.5rem;
+      display: inline-block;
+    }
+
+    .title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: #004d4d;
+    }
+
+    .desc {
+      font-size: 0.9rem;
+      color: #666;
+      margin-bottom: 1rem;
+    }
+
+    .start-btn {
+      background-color: #006666;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.9rem;
+
+      &:hover {
+        background-color: #009999;
+      }
+    }
+  }
+}

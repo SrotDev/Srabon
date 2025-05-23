@@ -1,0 +1,179 @@
+.functionalities {
+  background: linear-gradient(to bottom right, #e7f9fd, #dbeef8);
+  min-height: 100vh;
+  padding: 2rem;
+
+  .main-content {
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto;
+    justify-content: space-between;
+    gap: 2rem;
+
+    .left-panel, .right-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .left-panel {
+      flex: 2;
+    }
+
+    .right-panel {
+      flex: 1;
+    }
+
+    .greeting-box {
+      display: flex;
+      align-items: center;
+      padding: 1.5rem;
+      background: #e6f8fd;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      transition: transform 0.2s ease;
+      cursor: pointer;
+
+      &:hover {
+    transform: translateY(-4px);
+  }
+
+      .bot-image {
+        height: 175px;
+        margin-right: 1rem;
+      }
+
+      .greeting-text {
+        h2 {
+          font-size: 3rem;
+          font-weight: 700;
+          color: #000;
+        }
+        p {
+          font-size: 1.5rem;
+          color: #333;
+        }
+      }
+    }
+
+    .create-course-card {
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      cursor: pointer;
+  transition: transform 0.2s ease;
+
+      &:hover {
+    transform: translateY(-4px);
+  }
+
+      h3 {
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .start-btn {
+        margin-top: 1rem;
+        background-color: #16a085;
+        color: #fff;
+        border: none;
+        padding: 0.6rem 1.2rem;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: 600;
+
+        &:hover {
+          background-color: #138d75;
+        }
+      }
+    }
+
+    .selected-subjects-card {
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      cursor: pointer;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+  }
+
+      h4 {
+        margin-bottom: 1rem;
+      }
+
+      .subject-tags {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+
+        .subject-pill {
+          padding: 0.5rem 1rem;
+          border-radius: 20px;
+          font-weight: 600;
+          font-size: 0.9rem;
+
+          &.physics{ background: #57d5e2; color: #fff; }
+          &.chemistry{ background: #6ddccf; color: #fff; }
+          &.biology{ background: #ffe97f; color: #333; }  
+          &.economics{ background: #ffb677; color: #222; }
+          &.agriculture{ background: #b1e693; color: #223322; }
+          &.english{ background: #c5a3ff; color: #fff; }
+          &.math{ background: #ff7b8f; color: #fff; } 
+          &.history{ background: #95b8d1; color: #222; } 
+
+        }
+      }
+    }
+
+   .ask-ai-card {
+  background: #e6f8fd;
+  padding: 1.8rem;
+  border-radius: 20px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  height: auto;
+
+  &:hover {
+    transform: translateY(-4px);
+  }
+
+  .ask-ai-content {
+    h3 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #0b5b66;
+    }
+
+    p {
+      font-size: 0.95rem;
+      color: #333;
+      margin-bottom: 1rem;
+    }
+
+    .ask-btn {
+      background-color: #16a085;
+      color: #fff;
+      padding: 0.6rem 1.2rem;
+      border: none;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #138d75;
+      }
+    }
+  }
+}
+
+  }
+}

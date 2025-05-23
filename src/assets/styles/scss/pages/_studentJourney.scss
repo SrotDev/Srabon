@@ -1,0 +1,156 @@
+// src/assets/styles/scss/pages/_StudentJourneyPage.scss
+
+.survey-container {
+  background: linear-gradient(to bottom right, #e0f7fa, #b2ebf2);
+  border-radius: 20px;
+  padding: 2rem;
+  max-width: 900px;
+  margin: 2rem auto;
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
+}
+
+.survey-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .nav-btn {
+    background: #55e5c1;
+    border: none;
+    border-radius: 50%;
+    width: 42px;
+    height: 42px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s;
+
+    &:hover {
+      background: #26c1a3;
+    }
+  }
+}
+
+.survey-step {
+  text-align: center;
+
+  h2 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+  }
+
+  p {
+    font-size: 1.2rem;
+    font-weight: 500;
+  }
+}
+
+.survey-input {
+  width: 300px;
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+  border: none;
+  background: #fff;
+  color: #000;
+  font-size: 1.2rem;
+  text-align: center;
+  outline: none;
+  letter-spacing: 0.1em;
+}
+
+.survey-options {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+
+  .circle-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #dedede;
+    border: none;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+
+    &.active {
+      background: #55e5c1;
+      color: white;
+    }
+
+    &:hover {
+      background: #b2ebf2;
+    }
+  }
+}
+
+.subject-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  justify-items: center;
+
+  .subject-tile {
+    background: #55e5c1;
+    color: white;
+    font-weight: bold;
+    font-size: 1.1rem;
+    border-radius: 12px;
+    padding: 0.75rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    width: 100%;
+
+    input[type="checkbox"] {
+      accent-color: white;
+      transform: scale(1.3);
+    }
+  }
+}
+
+.progress-indicator {
+  display: flex;
+  gap: 0.6rem;
+
+  .dot {
+    width: 30px;
+    height: 3px;
+    background: #ccc;
+    border-radius: 2px;
+
+    &.active {
+      background: #000;
+    }
+  }
+}
+
+.spinner {
+  margin-top: 2rem;
+  width: 40px;
+  height: 40px;
+  border: 4px solid #b2ebf2;
+  border-top-color: #26c1a3;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
