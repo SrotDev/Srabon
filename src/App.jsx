@@ -3,7 +3,6 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
   RouterProvider,
-  BrowserRouter 
 } from "react-router-dom";
 import { useState } from "react";
 
@@ -25,28 +24,41 @@ import NotFoundPage from "./pages/NotFoundPage";
 const App = () => {
   const [course, setCourse] = useState(null);
   const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route path="/" element={<MainLayout />}>
-      <Route index element={<HomePage />} />
-      <Route path="/auth" element={<LoginSignupPage />} />
-      <Route path="/journey" element={<StudentJourneyPage />} />
-      <Route path="/courses" element={<CoursesPage />} />
-      <Route path="/explore" element={<ExplorePage />} />
-      <Route path="/create-course" element={<CreateCoursePage />} />
-      <Route path="/chats" element={<ChatPage />} />
-      <Route path="/courses/:name" element={<CourseDetailsPage setCourse={setCourse} />} />
-      <Route path="/courseArticle/:name" element={<CourseArticlePage course={course} />} />
-      <Route path="/flashcards/:name" element={<FlashcardsPage course={course} />} />
-      <Route path="/quiz/:name" element={<QuizPage />} />
-      <Route path="/functionalities" element={<FunctionalitiesPage />} />
-      <Route path="*" element={<NotFoundPage />} />
-    </Route>
-  ),
-  {
-    basename: "/Srabon"
-  }
-);
+    createRoutesFromElements(
+      <Route path="/" element={<MainLayout />}>
+        <Route index element={<HomePage />} />
+        <Route path="/auth" element={<LoginSignupPage />} />
+        <Route path="/journey" element={<StudentJourneyPage />} />
+        <Route path="/courses" element={<CoursesPage />} />
+        <Route path="/explore" element={<ExplorePage />} />
+        <Route path="/create-course" element={<CreateCoursePage />} />
+        <Route path="/chats" element={<ChatPage />} />
+        
+        <Route
+          path="/courses/:name"
+          element={<CourseDetailsPage setCourse={setCourse} />} 
+        />
+        <Route
+          path="/courseArticle/:name"
+          element={<CourseArticlePage course={course} />}
+        />
+        <Route 
+          path="/flashcards/:name" 
+          element={<FlashcardsPage course={course} />} 
+        />
 
+        <Route 
+          path="/quiz/:name" 
+          element={<QuizPage />} 
+        />
+
+
+
+        <Route path="/functionalities" element={<FunctionalitiesPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Route>
+    )
+  );
 
   return <RouterProvider router={router} />;
 };
