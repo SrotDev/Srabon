@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Hero from '../components/Hero';
 import Footer from '../components/Footer';
-import axios from 'axios';
 import ClipLoader from 'react-spinners/ClipLoader'; // ✅ Spinner
 
 const HomePage = () => {
@@ -13,11 +12,15 @@ const HomePage = () => {
 
     const checkApi = async () => {
       try {
-        const response = await axios.get('https://srabonbackend3.onrender.com/api/');
-        console.log('API Response:', response.data);
-        setData(response.data);
+        const response = await fetch('https://srabonbackend3.onrender.com/api/');
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const jsonData = await response.json();
+        console.log('API Response:', jsonData);
+        setData(jsonData);
 
-        if (response.data.ready === true) {
+        if (jsonData.ready === true) {
           setReady(true);
           clearInterval(intervalId);
         }
@@ -37,7 +40,7 @@ const HomePage = () => {
   }, []);
 
   if (!ready) {
-    // Show spinner while ready is false
+    // Show spinner while waiting
     return (
       <div className="spinner-container" style={{ textAlign: 'center', marginTop: '100px' }}>
         <ClipLoader color="#27d887" loading={true} size={50} />
