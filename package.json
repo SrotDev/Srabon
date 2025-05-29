@@ -1,16 +1,16 @@
 {
   "name": "srabon",
+  "homepage": "https://srotdev.github.io/Srabon/",
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://srotdev.github.io/Srabon",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d dist -b gh-pages"
   },
   "dependencies": {
     "bootstrap": "^5.3.6",

@@ -1,0 +1,23 @@
+.login-signup-page {
+  display: flex;
+  min-height: 100vh;
+  background: linear-gradient(to right, #e8f5ff, #d9f2f5);
+  gap: 2rem; // ✅ This is the key addition
+
+  padding: 0 3vw; // optional if edge spacing needed
+
+  .auth-left,
+  .auth-right {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+
+  .auth-left img {
+    width: 80%;          // slightly smaller
+    max-width: 600px;     // tighter limit
+    max-height: 600px;
+    object-fit: contain;
+  }
+}

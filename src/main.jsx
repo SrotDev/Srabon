@@ -4,10 +4,14 @@ import { BrowserRouter } from 'react-router-dom'
 import './index.css'
 import App from './App.jsx'
 
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <BrowserRouter basename="/Srabon"> {/* Replace with your actual repo name */}
-      <App />
-    </BrowserRouter>
-  </StrictMode>
-)
+try {
+  createRoot(document.getElementById('root')).render(
+    <StrictMode>
+      <BrowserRouter basename="/Srabon">
+        <App />
+      </BrowserRouter>
+    </StrictMode>
+  );
+} catch (e) {
+  console.error("🔥 Root render error:", e);
+}

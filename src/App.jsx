@@ -1,9 +1,4 @@
-import {
-  Route,
-  createBrowserRouter,
-  createRoutesFromElements,
-  RouterProvider,
-} from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { useState } from "react";
 
 import MainLayout from "./layouts/MainLayout";
@@ -23,44 +18,35 @@ import NotFoundPage from "./pages/NotFoundPage";
 
 const App = () => {
   const [course, setCourse] = useState(null);
-  const router = createBrowserRouter(
-    createRoutesFromElements(
+
+  return (
+    <Routes>
       <Route path="/" element={<MainLayout />}>
         <Route index element={<HomePage />} />
-        <Route path="/auth" element={<LoginSignupPage />} />
-        <Route path="/journey" element={<StudentJourneyPage />} />
-        <Route path="/courses" element={<CoursesPage />} />
-        <Route path="/explore" element={<ExplorePage />} />
-        <Route path="/create-course" element={<CreateCoursePage />} />
-        <Route path="/chats" element={<ChatPage />} />
-        
+        <Route path="auth" element={<LoginSignupPage />} />
+        <Route path="journey" element={<StudentJourneyPage />} />
+        <Route path="courses" element={<CoursesPage />} />
+        <Route path="explore" element={<ExplorePage />} />
+        <Route path="create-course" element={<CreateCoursePage />} />
+        <Route path="chats" element={<ChatPage />} />
         <Route
-          path="/courses/:name"
-          element={<CourseDetailsPage setCourse={setCourse} />} 
+          path="courses/:name"
+          element={<CourseDetailsPage setCourse={setCourse} />}
         />
         <Route
-          path="/courseArticle/:name"
+          path="courseArticle/:name"
           element={<CourseArticlePage course={course} />}
         />
-        <Route 
-          path="/flashcards/:name" 
-          element={<FlashcardsPage course={course} />} 
+        <Route
+          path="flashcards/:name"
+          element={<FlashcardsPage course={course} />}
         />
-
-        <Route 
-          path="/quiz/:name" 
-          element={<QuizPage />} 
-        />
-
-
-
-        <Route path="/functionalities" element={<FunctionalitiesPage />} />
+        <Route path="quiz/:name" element={<QuizPage />} />
+        <Route path="functionalities" element={<FunctionalitiesPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
-    )
+    </Routes>
   );
-
-  return <RouterProvider router={router} />;
 };
 
 export default App;

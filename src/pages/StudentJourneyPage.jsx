@@ -30,6 +30,7 @@ const StudentJourneyPage = () => {
           body: JSON.stringify({
             name,
             class: studentClass,
+            subjects,
           }),
         });
 

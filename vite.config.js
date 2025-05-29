@@ -1,10 +1,13 @@
+// vite.config.js
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  server: {
-    port: 3000,
+  base: '/Srabon/', // make sure it's exactly your repo name with casing
+  build: {
+    sourcemap: true,  // ✅ Must be present
+    outDir: 'dist'
   }
-})
+});
+

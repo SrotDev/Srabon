@@ -1,0 +1,57 @@
+.explore-page {
+  background: linear-gradient(to bottom right, #e0f7fa, #b2ebf2);
+  min-height: 100vh;
+  padding: 2rem 0;
+
+  .explore-container {
+    width: 60%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .explore-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  .explore-filters {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 2rem;
+
+    .filter-btn {
+      padding: 0.6rem 1.4rem;
+      border: 2px solid #008080;
+      border-radius: 30px;
+      background: transparent;
+      font-weight: 600;
+      font-size: 1rem;
+      color: #004d4d;
+      cursor: pointer;
+      transition: 0.3s ease;
+
+      &.active {
+        background-color: #008080;
+        color: #fff;
+      }
+
+      &:hover {
+        background-color: #26c1a3;
+        color: white;
+      }
+    }
+  }
+
+  .explore-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    width: 100%;
+  }
+}
