@@ -1,8 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import { marked } from 'marked'; // Import the 'marked' library for markdown parsing
+import { LanguageContext } from '../LanguageContext';
+import translations from '../translations.jsx';
 
 const CourseArticlePage = () => {
+  const { bengaliActive } = useContext(LanguageContext);
+  const lang = bengaliActive ? 'bn' : 'en';
   const location = useLocation();
   const { name } = useParams();
   const course = location.state?.course; // Receive the course data via props
@@ -18,7 +22,7 @@ const CourseArticlePage = () => {
   }, [course]);
 
   if (!course) {
-    return <div className="loading">Loading article...</div>;
+    return <div className="loading">{translations[lang].load_article}</div>;
   }
 
   const handleSeeFlashcards = () => {
@@ -45,7 +49,7 @@ const CourseArticlePage = () => {
 
       <div className="flashcards-btn">
         <button onClick={handleSeeFlashcards}>
-          See Flashcards
+          { translations[lang].see_flashcards }
         </button>
       </div>
     </div>

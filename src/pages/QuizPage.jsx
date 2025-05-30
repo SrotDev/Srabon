@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { LanguageContext } from '../LanguageContext';
+import translations from '../translations.jsx';
 
 const QuizPage = () => {
+  const { bengaliActive } = useContext(LanguageContext);
+  const lang = bengaliActive ? 'bn' : 'en';
   const { name } = useParams();
   const location = useLocation();
   const course = location.state?.course;
@@ -10,7 +14,7 @@ const QuizPage = () => {
   const [selectedAnswers, setSelectedAnswers] = useState(new Array(6).fill(null));
 
   if (!course) {
-    return <div className="loading">Loading quiz...</div>;
+    return <div className="loading">{translations[lang].load_quiz}</div>;
   }
 
   const handleAnswerChange = (questionIndex, answerIndex) => {
@@ -42,7 +46,7 @@ const QuizPage = () => {
     }
   });
 
-  toast.success(`You scored ${score}/${total}!`);
+  toast.success(`${translations[lang].your_score}${score}/${total}!`);
   navigate('/courses');
 };
 
@@ -51,7 +55,7 @@ const QuizPage = () => {
   return (
     <div className="quiz-form-page">
       <div className="quiz-form-header">
-        <h1>{course.title} - Quiz</h1>
+        <h1>{course.title}{translations[lang].quiz_end}</h1>
         <div className="class-meta">
           <span className="class-box">Class: {localStorage.getItem('class')}</span>
           <span className="subject-box">{course.subject}</span>
@@ -78,7 +82,7 @@ const QuizPage = () => {
             </div>
           </div>
         ))}
-        <button type="submit" className="submit-quiz-btn">Submit Quiz</button>
+        <button type="submit" className="submit-quiz-btn">{translations[lang].submit_quiz}</button>
       </form>
     </div>
   );

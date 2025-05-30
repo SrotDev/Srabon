@@ -1,17 +1,16 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom' // Add this!
 import './index.css'
 import App from './App.jsx'
+import LanguageProvider from './LanguageContext.jsx'
 
-try {
-  createRoot(document.getElementById('root')).render(
-    <StrictMode>
-      <BrowserRouter basename="/Srabon">
+createRoot(document.getElementById('root')).render(
+  <StrictMode>
+    <LanguageProvider>
+      <BrowserRouter>  {/* Wrap your <App /> with BrowserRouter */}
         <App />
       </BrowserRouter>
-    </StrictMode>
-  );
-} catch (e) {
-  console.error("🔥 Root render error:", e);
-}
+    </LanguageProvider>
+  </StrictMode>,
+)

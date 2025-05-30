@@ -1,8 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { marked } from 'marked'; // Import the 'marked' library for markdown parsing
+import { LanguageContext } from '../LanguageContext';
+import translations from '../translations.jsx';
 
 const FlashcardsPage = () => {
+  const { bengaliActive } = useContext(LanguageContext);
+  const lang = bengaliActive ? 'bn' : 'en';
   const { name } = useParams(); // Get the course name from the URL parameter
   const location = useLocation();
   const course = location.state?.course; // Receive the course data via props
@@ -21,7 +25,7 @@ const FlashcardsPage = () => {
   }, [course, currentCardIndex]);
 
   if (!course) {
-    return <div className="loading">Loading flashcards...</div>;
+    return <div className="loading">{translations[lang].load_flashcards}</div>;
   }
 
   const handleNextCard = () => {
@@ -66,20 +70,20 @@ const FlashcardsPage = () => {
           onClick={handlePreviousCard}
           disabled={currentCardIndex === 0}
         >
-          Previous
+          {translations[lang].previous}
         </button>
         <button 
           className="next-btn" 
           onClick={handleNextCard}
           disabled={currentCardIndex === course.flashcards.length - 1}
         >
-          Next
+          {translations[lang].next}
         </button>
       </div>
 
       <div className="start-quiz-btn">
         <button onClick={nextQuiz}>
-          Ready For Quiz
+          {translations[lang].ready_quiz}
         </button>
       </div>
     </div>

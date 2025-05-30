@@ -1,8 +1,13 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { marked } from 'marked';
+import { LanguageContext } from '../LanguageContext';
+import translations from '../translations.jsx';
 
 const ChatPage = () => {
+  const { bengaliActive } = useContext(LanguageContext);
+  const lang = bengaliActive ? 'bn' : 'en';
+  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
   const navigate = useNavigate();
   const [userMessage, setUserMessage] = useState('');
   const [chatHistory, setChatHistory] = useState([]);
@@ -26,7 +31,7 @@ const ChatPage = () => {
     setAiTyping(true);
 
     try {
-      const response = await fetch("https://srabonbackend3.onrender.com/api/chats/", {
+      const response = await fetch(`${apiBaseUrl}/chats/`, {
         method: 'POST',
         headers: {
           "Content-Type": "application/json",
@@ -54,7 +59,7 @@ const ChatPage = () => {
     const name = localStorage.getItem("name") || "there";
     const welcomeMessage = {
       from: 'ai',
-      text: `Hi ${name}! I'm your friend আভা. I'm here to support you with your studies, clarify doubts, or just have a chat. Ask me anything to get started! 🚀`
+      text: `${ translations[lang].greeting_title}${name}! ${ translations[lang].chat_start }`
     };
     setChatHistory([welcomeMessage]);
   }, []);
@@ -70,7 +75,7 @@ const ChatPage = () => {
       <div className="chat-container">
         <div className="chat-header">
           <button onClick={() => navigate('/functionalities')} className="back-button">← Back</button>
-          <h2>Chat with আভা.AI</h2>
+          <h2>{ translations[lang].chat_head }</h2>
         </div>
 
         <div className="chat-history">
@@ -84,7 +89,7 @@ const ChatPage = () => {
           ))}
           {aiTyping && (
             <div className="chat-message ai typing">
-              <div className="markdown-message">AI is typing...</div>
+              <div className="markdown-message">{ translations[lang].ai_type }</div>
             </div>
           )}
           <div ref={chatEndRef} />
@@ -92,7 +97,7 @@ const ChatPage = () => {
 
         <div className="chat-input">
           <textarea
-            placeholder="Type a new message here"
+            placeholder={translations[lang].new_msg}
             value={userMessage}
             onChange={handleMessageChange}
             disabled={isSending}

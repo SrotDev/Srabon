@@ -1,9 +1,16 @@
+import { useContext } from 'react';
+import { LanguageContext } from '../../LanguageContext';
+import translations from '../../translations.jsx';
+
 const subjects = [
   "Physics", "Chemistry", "Math", "History",
   "Economics", "Biology", "Agriculture", "English"
 ];
 
 const StepSubjects = ({ selectedSubjects, setSelectedSubjects }) => {
+  const { bengaliActive } = useContext(LanguageContext);
+  const lang = bengaliActive ? 'bn' : 'en';
+
   const toggleSubject = (subject) => {
     setSelectedSubjects((prev) =>
       prev.includes(subject)
@@ -14,7 +21,7 @@ const StepSubjects = ({ selectedSubjects, setSelectedSubjects }) => {
 
   return (
     <div className="survey-step">
-      <h2>Alright! Which subjects are you studying?</h2>
+      <h2>{ translations[lang].ask_subject }</h2>
       <div className="subject-grid">
         {subjects.map((sub) => (
           <label key={sub} className="subject-tile">

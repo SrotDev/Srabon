@@ -4,3 +4,5 @@ git push origin main
 
 npm run build
 npm run deploy
+
+// "homepage": "https://srotdev.github.io/Srabon/",

@@ -1,9 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { LanguageContext } from '../LanguageContext';
+import translations from '../translations.jsx';
 
-const UNSPLASH_ACCESS_KEY = 'ZjJbjMdMJ7IyEH-Ou4zW4Ub1x_3iZKdl7jkK2Cp3ZKw';
 
 const CourseCard = ({ course }) => {
+  const UNSPLASH_ACCESS_KEY = import.meta.env.VITE_UNSPLASH_ACCESS;
+  const { bengaliActive } = useContext(LanguageContext);
+  const lang = bengaliActive ? 'bn' : 'en';
   const { name, title, subtitle, subject } = course;
   const [imageUrl, setImageUrl] = useState(null);
   const navigate = useNavigate();
@@ -35,7 +39,7 @@ const CourseCard = ({ course }) => {
         <h3 className="title">{title}</h3>
         <p className="desc">{subtitle}</p>
         <button className="start-btn" onClick={() => navigate(`/courses/${name}`, { state: { name } })}>
-          View Course
+          { translations[lang].view_course }
         </button>
       </div>
     </div>

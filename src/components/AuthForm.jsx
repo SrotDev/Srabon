@@ -1,16 +1,22 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import AuthInput from "./AuthInput";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { LanguageContext } from '../LanguageContext';
+import translations from '../translations.jsx';
+import ClipLoader from "react-spinners/ClipLoader"; // ✅ Spinner
 
 const AuthForm = () => {
+  const { bengaliActive } = useContext(LanguageContext);
+  const lang = bengaliActive ? 'bn' : 'en';
+  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
   const [isLogin, setIsLogin] = useState(true);
   const [form, setForm] = useState({
     username: "",
     email: "",
     password: "",
   });
-
+  const [loading, setLoading] = useState(false); // ✅ New loading state
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -18,53 +24,63 @@ const AuthForm = () => {
   };
 
   const handleContinueClick = async () => {
-  const apiUrl = isLogin
-    ? "https://srabonbackend3.onrender.com/api/login/"
-    : "https://srabonbackend3.onrender.com/api/register/";
+    const apiUrl = isLogin
+      ? `${apiBaseUrl}/login/`
+      : `${apiBaseUrl}/register/`;
 
-  const payload = isLogin
-    ? {
-        username: form.username,
-        password: form.password,
+    const payload = isLogin
+      ? {
+          username: form.username,
+          password: form.password,
+        }
+      : {
+          username: form.username,
+          password: form.password,
+          email: form.email,
+        };
+
+    try {
+      setLoading(true); // ✅ Show spinner
+      const res = await fetch(apiUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        const errorMessage =
+          data.detail ||
+          Object.values(data).flat().join(" ") ||
+          "Something went wrong.";
+        throw new Error(errorMessage);
       }
-    : {
-        username: form.username,
-        password: form.password,
-        email: form.email,
-      };
 
-  try {
-    const res = await fetch(apiUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
+      if (data.token) {
+        localStorage.setItem("token", data.token);
+        console.log(data.token);
+      }
 
-    const data = await res.json();
-
-    if (!res.ok) {
-      const errorMessage =
-        data.detail ||
-        Object.values(data).flat().join(" ") ||
-        "Something went wrong.";
-      throw new Error(errorMessage);
+      toast.success(`${isLogin ? translations[lang].login : translations[lang].signup} ${translations[lang].successful}`);
+      navigate(isLogin ? "/functionalities" : "/journey");
+      
+    } catch (err) {
+      toast.error(`❌ ${err.message}`);
+      console.error(`❌ ${isLogin ? translations[lang].login : translations[lang].signup} ${translations[lang].failed}:`, err);
+    } finally {
+      setLoading(false); // ✅ Hide spinner
     }
+  };
 
-    // ✅ Save token if available
-    if (data.token) {
-      localStorage.setItem("token", data.token);
-      console.log(data.token);
-    }
-
-    toast.success(`${isLogin ? "Login" : "Signup"} successful`);
-    navigate(isLogin ? "/functionalities" : "/journey");
-    
-  } catch (err) {
-    toast.error(`❌ ${err.message}`);
-    console.error(`❌ ${isLogin ? "Login" : "Signup"} Failed:`, err);
+  if (loading) {
+    // ✅ Show spinner instead of form while loading
+    return (
+      <div className="spinner-container" style={{ textAlign: 'center', marginTop: '100px' }}>
+        <ClipLoader color="#27d887" loading={true} size={50} />
+      </div>
+    );
   }
-};
-
 
   return (
     <div className="auth-form-wrapper">
@@ -73,20 +89,20 @@ const AuthForm = () => {
           className={isLogin ? "active" : ""}
           onClick={() => setIsLogin(true)}
         >
-          LOGIN
+          { translations[lang].login }
         </button>
         <span>|</span>
         <button
           className={!isLogin ? "active" : ""}
           onClick={() => setIsLogin(false)}
         >
-          SIGN UP
+          { translations[lang].signup }
         </button>
       </div>
 
       <div className="form-fields">
         <AuthInput
-          label="Username"
+          label={ translations[lang].username }
           name="username"
           type="text"
           value={form.username}
@@ -95,7 +111,7 @@ const AuthForm = () => {
 
         {!isLogin && (
           <AuthInput
-            label="Email"
+            label={ translations[lang].email }
             name="email"
             type="email"
             value={form.email}
@@ -104,7 +120,7 @@ const AuthForm = () => {
         )}
 
         <AuthInput
-          label="Password"
+          label={ translations[lang].password }
           name="password"
           type="password"
           value={form.password}
@@ -116,27 +132,27 @@ const AuthForm = () => {
           type="button"
           onClick={handleContinueClick}
         >
-          CONTINUE
+          { translations[lang].continue }
         </button>
 
         <p className="auth-link">
           {isLogin ? (
             <>
-              Don’t have an account?{" "}
-              <span onClick={() => setIsLogin(false)}>Register Now</span>
+              { translations[lang].no_account }{" "}
+              <span onClick={() => setIsLogin(false)}>{ translations[lang].auth_link_register }</span>
             </>
           ) : (
             <>
-              Already have an account?{" "}
-              <span onClick={() => setIsLogin(true)}>Login</span>
+              { translations[lang].yes_account }{" "}
+              <span onClick={() => setIsLogin(true)}>{ translations[lang].auth_link_login }</span>
             </>
           )}
         </p>
       </div>
 
       <div className="auth-footer">
-        <h2>{isLogin ? "Welcome Back!" : "Nice to meet you :)"}</h2>
-        <p>{isLogin ? "Please login to continue" : "Just sign up to join us"}</p>
+        <h2>{isLogin ? translations[lang].welcome  : translations[lang].nice }</h2>
+        <p>{isLogin ? translations[lang].login: translations[lang].signup }</p>
       </div>
     </div>
   );

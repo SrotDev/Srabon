@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 
 const StudentJourneyPage = () => {
+  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
   const [step, setStep] = useState(0);
   const [name, setName] = useState("");
   const [studentClass, setStudentClass] = useState(null);
@@ -21,7 +22,7 @@ const StudentJourneyPage = () => {
     const timer = setTimeout(async () => {
       try {
         // 1. Submit student info
-        const res = await fetch("https://srabonbackend3.onrender.com/api/studentinfo/", {
+        const res = await fetch(`${apiBaseUrl}/studentinfo/`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -57,7 +58,7 @@ const StudentJourneyPage = () => {
         for (const subject of subjects) {
           const courseTitles = subjectTitles[subject] || [];
           for (const title of courseTitles) {
-            const courseRes = await fetch("https://srabonbackend3.onrender.com/api/addcourses/", {
+            const courseRes = await fetch(`${apiBaseUrl}/addcourses/`, {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",

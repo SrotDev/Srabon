@@ -1,11 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import ClipLoader from "react-spinners/ClipLoader";
+import { LanguageContext } from '../LanguageContext';
+import translations from '../translations.jsx';
 
-// Unsplash Access Key
-const UNSPLASH_ACCESS_KEY = 'ZjJbjMdMJ7IyEH-Ou4zW4Ub1x_3iZKdl7jkK2Cp3ZKw';
 
 const CourseDetailsPage = () => {
+  const { bengaliActive } = useContext(LanguageContext);
+  const lang = bengaliActive ? 'bn' : 'en';
+  const UNSPLASH_ACCESS_KEY = import.meta.env.VITE_UNSPLASH_ACCESS;
+  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
   const location = useLocation(); // Get location from the router
   const { name } = location.state || {}; // Get course name passed from CourseCard
   const [course, setCourse] = useState(null); // Store the course data
@@ -22,7 +26,7 @@ const CourseDetailsPage = () => {
 
     const fetchCourseData = async () => {
       try {
-        const res = await fetch(`https://srabonbackend3.onrender.com/api/courses/${name}/`, {
+        const res = await fetch(`${apiBaseUrl}/courses/${name}/`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -98,7 +102,7 @@ const CourseDetailsPage = () => {
         {/* <button className="share-btn">Share</button> */}
       </div>
 
-      <div className="subtitle">Description</div>
+      <div className="subtitle">{ translations[lang].desc }</div>
       <div className="course-content">
         <div className="description">
           <img src={imageUrl} alt={course.subject} className="course-image" />
@@ -107,8 +111,8 @@ const CourseDetailsPage = () => {
       </div>
 
       <div className="buttons">
-        <button className="all-courses-btn" onClick={handleAllCourses}>See All Courses</button>
-        <button className="enroll-btn" onClick={handleEnrollNow}>Start Course</button>
+        <button className="all-courses-btn" onClick={handleAllCourses}>{translations[lang].all_courses}</button>
+        <button className="enroll-btn" onClick={handleEnrollNow}>{translations[lang].start_course}</button>
       </div>
     </div>
   );

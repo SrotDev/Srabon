@@ -1,17 +1,22 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import CourseCard from "./CourseCard";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
-import ClipLoader from "react-spinners/ClipLoader"; // ✅ Spinner
+import ClipLoader from "react-spinners/ClipLoader";
+import { LanguageContext } from '../LanguageContext';
 
 const CourseList = () => {
+  const { bengaliActive } = useContext(LanguageContext);
+  const lang = bengaliActive ? 'bn' : 'en';
+  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
   const [courses, setCourses] = useState([]);
   const [index, setIndex] = useState(0);
-  const [loading, setLoading] = useState(true); // ✅ loading state
+  const [loading, setLoading] = useState(true);
 
+  // Fetch courses initially
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const res = await fetch("https://srabonbackend3.onrender.com/api/courses/", {
+        const res = await fetch(`${apiBaseUrl}/courses/`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
@@ -27,11 +32,11 @@ const CourseList = () => {
       } catch (err) {
         console.error("Failed to load courses:", err);
       } finally {
-        setLoading(false); // ✅ Hide spinner
+        setLoading(false);
       }
     };
     fetchCourses();
-  }, []);
+  }, [apiBaseUrl]);
 
   const next = () => setIndex((prev) => (prev + 1) % courses.length);
   const prev = () => setIndex((prev) => (prev - 1 + courses.length) % courses.length);

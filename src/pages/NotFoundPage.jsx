@@ -1,8 +1,12 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { useNavigate } from 'react-router-dom';
 import notFoundImage from "../assets/images/404.svg";
+import { LanguageContext } from '../LanguageContext';
+import translations from '../translations.jsx';
 
 const NotFoundPage = () => {
+  const { bengaliActive } = useContext(LanguageContext);
+  const lang = bengaliActive ? 'bn' : 'en';
   const navigate = useNavigate();
 
   return (
@@ -13,13 +17,12 @@ const NotFoundPage = () => {
           alt="Lost Robot"
           className="not-found-img"
         />
-        <h1>Oops! Page Not Found</h1>
+        <h1>{translations[lang].not_found_title}</h1>
         <p>
-          It seems you've taken a wrong turn. But don't worry, we'll help you
-          get back on track!
+          {translations[lang].not_found_body}
         </p>
         <button onClick={() => navigate('/functionalities')} className="home-btn">
-            Go Home
+            {translations[lang].home_btn}
         </button>
       </div>
     </div>
