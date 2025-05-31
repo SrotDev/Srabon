@@ -13298,11 +13298,6 @@ a:hover {
   justify-content: space-between;
   margin-bottom: 15px;
 }
-.chat-header h2 {
-  font-size: 24px;
-  font-weight: 600;
-  color: #34495e;
-}
 .chat-header .back-button {
   background-color: #138d75;
   color: white;
@@ -13315,6 +13310,11 @@ a:hover {
 }
 .chat-header .back-button:hover {
   background-color: #0e6655;
+}
+.chat-header h2 {
+  font-size: 24px;
+  font-weight: 600;
+  color: #34495e;
 }
 
 .chat-history {
@@ -13336,6 +13336,7 @@ a:hover {
   line-height: 1.5;
   word-break: break-word;
   animation: fadeIn 0.3s ease-in-out;
+  position: relative;
 }
 .chat-message.user {
   background: #d1f2eb;
@@ -13362,6 +13363,9 @@ a:hover {
   display: flex;
   align-items: center;
   gap: 8px;
+}
+.chat-message button {
+  display: none;
 }
 
 .chat-message.listening-indicator .markdown-message {

@@ -25,12 +25,6 @@
   justify-content: space-between;
   margin-bottom: 15px;
 
-  h2 {
-    font-size: 24px;
-    font-weight: 600;
-    color: #34495e;
-  }
-
   .back-button {
     background-color: #138d75;
     color: white;
@@ -44,6 +38,12 @@
     &:hover {
       background-color: #0e6655;
     }
+  }
+
+  h2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #34495e;
   }
 }
 
@@ -66,6 +66,7 @@
   line-height: 1.5;
   word-break: break-word;
   animation: fadeIn 0.3s ease-in-out;
+  position: relative;
 
   &.user {
     background: #d1f2eb;
@@ -96,6 +97,11 @@
     align-items: center;
     gap: 8px;
   }
+
+  // 🟩 Invisible speaker icon (for programmatic click)
+  button {
+    display: none;
+  }
 }
 
 .chat-message.listening-indicator .markdown-message {
@@ -122,9 +128,9 @@
     border: 1px solid #ccc;
     border-radius: 10px;
     resize: none;
-    min-height: 50px;   // 🟩 Initial height
-    max-height: 150px;  // 🟩 Max height for dynamic sizing
-    overflow-y: auto;   // 🟩 Scroll when too much content
+    min-height: 50px;
+    max-height: 150px;
+    overflow-y: auto;
     transition: border-color 0.2s;
 
     &:focus {

@@ -3,13 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { marked } from "marked";
 import { LanguageContext } from "../LanguageContext";
 import translations from "../translations.jsx";
-import { FaMicrophone, FaPaperPlane } from "react-icons/fa";
+import { FaMicrophone, FaPaperPlane, FaVolumeUp } from "react-icons/fa";
 
 const ChatPage = () => {
   const { bengaliActive } = useContext(LanguageContext);
   const lang = bengaliActive ? "bn" : "en";
   const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
   const navigate = useNavigate();
+
   const [userMessage, setUserMessage] = useState("");
   const [chatHistory, setChatHistory] = useState([]);
   const [isSending, setIsSending] = useState(false);
@@ -20,12 +21,10 @@ const ChatPage = () => {
   const isFirstMessage = useRef(true);
   const chatEndRef = useRef(null);
   const shouldSpeakNextAiResponse = useRef(false);
-  const RESPONSIVE_VOICE = import.meta.env.VITE_RESPONSIVE_VOICE_KEY;
 
-  // ✅ Load ResponsiveVoice dynamically
   useEffect(() => {
     const script = document.createElement("script");
-    script.src = `https://code.responsivevoice.org/responsivevoice.js?key=${RESPONSIVE_VOICE}`;
+    script.src = "https://code.responsivevoice.org/responsivevoice.js?key=206RQ6BM";
     script.async = true;
     script.onload = () => {
       console.log("✅ ResponsiveVoice script loaded!");
@@ -37,12 +36,21 @@ const ChatPage = () => {
     document.body.appendChild(script);
   }, []);
 
-  const handleMessageChange = (e) => {
-    setUserMessage(e.target.value);
+  const handleMessageChange = (e) => setUserMessage(e.target.value);
+
+  const stopSpeaking = () => {
+    if (window.responsiveVoice && window.responsiveVoice.isPlaying()) {
+      window.responsiveVoice.cancel();
+    } else if ("speechSynthesis" in window) {
+      window.speechSynthesis.cancel();
+    }
   };
 
   const handleSendMessage = async (text) => {
     if (!text.trim() || isSending) return;
+
+    // Stop previous AI voice
+    stopSpeaking();
 
     const newMessage = { from: "user", text };
     setChatHistory((prev) => [...prev, newMessage]);
@@ -67,9 +75,12 @@ const ChatPage = () => {
       const aiMessage = { from: "ai", text: data.message };
       setChatHistory((prev) => [...prev, aiMessage]);
 
-      // 🟩 Speak AI response if voice input was used
       if (shouldSpeakNextAiResponse.current) {
-        speakText(aiMessage.text);
+        setTimeout(() => {
+          const speakerButtons = document.querySelectorAll(".speaker-button");
+          const lastSpeaker = speakerButtons[speakerButtons.length - 1];
+          if (lastSpeaker) lastSpeaker.click();
+        }, 100);
         shouldSpeakNextAiResponse.current = false;
       }
 
@@ -82,69 +93,50 @@ const ChatPage = () => {
     }
   };
 
-  const handleSubmit = () => {
-    handleSendMessage(userMessage);
-  };
+  const handleSubmit = () => handleSendMessage(userMessage);
 
   const startListening = () => {
-    if (
-      !("webkitSpeechRecognition" in window) &&
-      !("SpeechRecognition" in window)
-    ) {
+    if (!("webkitSpeechRecognition" in window) && !("SpeechRecognition" in window)) {
       alert("Sorry, your browser does not support speech recognition.");
       return;
     }
 
-    const SpeechRecognition =
-      window.SpeechRecognition || window.webkitSpeechRecognition;
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     const recognition = new SpeechRecognition();
 
     recognition.lang = bengaliActive ? "bn-BD" : "en-US";
     recognition.interimResults = false;
     recognition.maxAlternatives = 1;
 
-    recognition.onstart = () => {
-      setIsListening(true);
-      console.log("🎤 Listening...");
-    };
-
+    recognition.onstart = () => setIsListening(true);
     recognition.onresult = (event) => {
       const transcript = event.results[0][0].transcript;
-      console.log("🎤 Voice input:", transcript);
       setIsListening(false);
       shouldSpeakNextAiResponse.current = true;
       handleSendMessage(transcript);
     };
-
     recognition.onerror = (event) => {
       console.error("❌ Speech recognition error:", event.error);
       setIsListening(false);
     };
-
-    recognition.onend = () => {
-      setIsListening(false);
-    };
+    recognition.onend = () => setIsListening(false);
 
     recognition.start();
   };
 
-  // ✅ Speak AI response using ResponsiveVoice (with fallback)
   const speakText = (text) => {
     if (!text.trim()) return;
 
+    const voice = bengaliActive ? "Bangla India Female" : "US English Female";
+
     if (isResponsiveVoiceLoaded && window.responsiveVoice) {
-      const voice = bengaliActive ? "Bangla India Female" : "US English Female";
-      console.log(`🔊 Speaking with ResponsiveVoice: ${voice}`);
       window.responsiveVoice.speak(text, voice);
-    } else if ('speechSynthesis' in window) {
-      console.warn("⚠️ ResponsiveVoice not loaded, falling back to browser TTS.");
+    } else if ("speechSynthesis" in window) {
       const synth = window.speechSynthesis;
       const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = bengaliActive ? 'bn-BD' : 'en-US';
+      utterance.lang = bengaliActive ? "bn-IN" : "en-US";
       synth.cancel();
       synth.speak(utterance);
-    } else {
-      console.warn("❌ No TTS support found in this browser.");
     }
   };
 
@@ -167,12 +159,11 @@ const ChatPage = () => {
     <div className="chat-page">
       <div className="chat-container">
         <div className="chat-header">
-          <button
-            onClick={() => navigate("/functionalities")}
-            className="back-button"
-          >
-            ← Back
-          </button>
+          <div className="header-buttons">
+            <button onClick={() => navigate("/functionalities")} className="back-button">
+              ← Back
+            </button>
+          </div>
           <h2>{translations[lang].chat_head}</h2>
         </div>
 
@@ -183,13 +174,21 @@ const ChatPage = () => {
                 className="markdown-message"
                 dangerouslySetInnerHTML={{ __html: marked(msg.text) }}
               />
+              {msg.from === "ai" && (
+                <button
+                  className="speaker-button"
+                  style={{ display: "none" }}
+                  onClick={() => speakText(msg.text)}
+                  title="Play Audio"
+                >
+                  <FaVolumeUp />
+                </button>
+              )}
             </div>
           ))}
           {aiTyping && (
             <div className="chat-message ai typing">
-              <div className="markdown-message">
-                {translations[lang].ai_type}
-              </div>
+              <div className="markdown-message">{translations[lang].ai_type}</div>
             </div>
           )}
           {isListening && (
@@ -210,12 +209,7 @@ const ChatPage = () => {
             disabled={isSending}
           />
           <div className="input-buttons">
-            <button
-              onClick={startListening}
-              className="voice-button"
-              disabled={isSending}
-              title="Voice Input"
-            >
+            <button onClick={startListening} className="voice-button" disabled={isSending} title="Voice Input">
               <FaMicrophone />
             </button>
             <button
