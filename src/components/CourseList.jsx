@@ -27,7 +27,10 @@ const CourseList = () => {
           title: c.parent?.title,
           subtitle: c.parent?.subtitle,
           subject: c.parent?.subject,
+          "title-bn": c.parent?.["title-bn"],
+          "subtitle-bn": c.parent?.["subtitle-bn"],
         }));
+
         setCourses(parsed);
       } catch (err) {
         console.error("Failed to load courses:", err);

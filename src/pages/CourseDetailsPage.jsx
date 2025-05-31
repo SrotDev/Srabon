@@ -90,6 +90,8 @@ const CourseDetailsPage = () => {
     );
   }
 
+  const courseDescription = bengaliActive && course.subject != "English" ? course["description-bn"] : course.description;
+
   return (
     <div className="course-details">
       <div className="details-header">
@@ -106,7 +108,7 @@ const CourseDetailsPage = () => {
       <div className="course-content">
         <div className="description">
           <img src={imageUrl} alt={course.subject} className="course-image" />
-          <p>{course.description || 'No description available.'}</p>
+          <p>{courseDescription || 'No description available.'}</p>
         </div>
       </div>
 

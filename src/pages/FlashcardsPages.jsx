@@ -18,11 +18,11 @@ const FlashcardsPage = () => {
   useEffect(() => {
     if (course && course.flashcards && course.flashcards[currentCardIndex]) {
       // Convert the markdown content of the flashcard to HTML
-      const flashcardMarkdown = Object.values(course.flashcards[currentCardIndex])[0];
+      const flashcardMarkdown = bengaliActive && course.subject != "English" ? Object.values(course["flashcards-bn"][currentCardIndex])[0]: Object.values(course.flashcards[currentCardIndex])[0];
       const flashcardHtml = marked(flashcardMarkdown);
       setFlashcardHtml(flashcardHtml); // Set the converted HTML
     }
-  }, [course, currentCardIndex]);
+  }, [course, currentCardIndex, bengaliActive]);
 
   if (!course) {
     return <div className="loading">{translations[lang].load_flashcards}</div>;

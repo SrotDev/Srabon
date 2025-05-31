@@ -17,6 +17,12 @@ const QuizPage = () => {
     return <div className="loading">{translations[lang].load_quiz}</div>;
   }
 
+  // 🟩 Use Bengali questions if conditions met
+  const questions =
+    bengaliActive && course.subject !== "English"
+      ? course["questions-bn"]
+      : course.questions;
+
   const handleAnswerChange = (questionIndex, answerIndex) => {
     const updatedAnswers = [...selectedAnswers];
     updatedAnswers[questionIndex] = answerIndex;
@@ -24,38 +30,41 @@ const QuizPage = () => {
   };
 
   const handleSubmit = (e) => {
-  e.preventDefault();
-  const total = course.questions.length;
-  let score = 0;
+    e.preventDefault();
+    const total = questions.length;
+    let score = 0;
 
-  selectedAnswers.forEach((answerIndex, index) => {
-    if (answerIndex !== null) {
-      const selectedValue = course.questions[index][['option1', 'option2', 'option3', 'option4'][answerIndex]];
-      const correctAnswer = course.questions[index].ans;
+    selectedAnswers.forEach((answerIndex, index) => {
+      if (answerIndex !== null) {
+        const selectedValue = questions[index][['option1', 'option2', 'option3', 'option4'][answerIndex]];
+        const correctAnswer = questions[index].ans;
 
-      if (selectedValue.trim().toLowerCase() === correctAnswer.trim().toLowerCase()) {
-        score += 1;
+        if (selectedValue.trim().toLowerCase() === correctAnswer.trim().toLowerCase()) {
+          score += 1;
+        }
+
+        console.log({
+          answerIndex,
+          selectedValue,
+          correctAnswer,
+          matched: selectedValue.trim().toLowerCase() === correctAnswer.trim().toLowerCase()
+        });
       }
+    });
 
-      console.log({
-        answerIndex,
-        selectedValue,
-        correctAnswer,
-        matched: selectedValue.trim().toLowerCase() === correctAnswer.trim().toLowerCase()
-      });
-    }
-  });
+    toast.success(`${translations[lang].your_score}${score}/${total}!`);
+    navigate('/courses');
+  };
 
-  toast.success(`${translations[lang].your_score}${score}/${total}!`);
-  navigate('/courses');
-};
-
-
+  const courseTitle =
+    bengaliActive && course.subject !== "English"
+      ? course["title-bn"]
+      : course.title;
 
   return (
     <div className="quiz-form-page">
       <div className="quiz-form-header">
-        <h1>{course.title}{translations[lang].quiz_end}</h1>
+        <h1>{courseTitle}{translations[lang].quiz_end}</h1>
         <div className="class-meta">
           <span className="class-box">Class: {localStorage.getItem('class')}</span>
           <span className="subject-box">{course.subject}</span>
@@ -63,7 +72,7 @@ const QuizPage = () => {
       </div>
 
       <form className="quiz-form" onSubmit={handleSubmit}>
-        {course.questions.map((q, qIndex) => (
+        {questions.map((q, qIndex) => (
           <div key={qIndex} className="quiz-question">
             <h3>Q{qIndex + 1}: {q.question}</h3>
             <div className="options">

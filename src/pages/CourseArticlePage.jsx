@@ -17,9 +17,9 @@ const CourseArticlePage = () => {
     if (!course || !course.article) return;
 
     // Convert the Markdown article to HTML
-    const htmlContent = marked(course.article);
+    const htmlContent = bengaliActive && course.subject != "English" ? marked(course["article-bn"]) : marked(course.article);
     setArticleHtml(htmlContent); // Set the converted HTML to the state
-  }, [course]);
+  }, [course, bengaliActive]);
 
   if (!course) {
     return <div className="loading">{translations[lang].load_article}</div>;
@@ -41,7 +41,7 @@ const CourseArticlePage = () => {
       </div>
 
       <div className="article-content">
-        <h2>Article</h2>
+        <h2>{ translations[lang].article }</h2>
         <div className="article-text">
           <div dangerouslySetInnerHTML={{ __html: articleHtml }} />
         </div>

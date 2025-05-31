@@ -62,6 +62,7 @@ const translations = {
     "chat_head": "Chat with আভা.AI",
     "ai_type": "AI is typing...",
     "new_msg": "Type a new message here",
+    "listening": "Listening...",
 
     // Article, Details
     "load_article": "Loading article...",
@@ -163,6 +164,7 @@ const translations = {
     "chat_head": "আভা.AI-এর সাথে চ্যাট করো",
     "ai_type": "এআই লিখছে...",
     "new_msg": "এখানে একটি নতুন মেসেজ টাইপ করুন",
+    "listening": "তোমার কথা শুনছি...",
 
     "load_article": "আর্টিকেল লোড হচ্ছে...",
     "class": "ক্লাস: ",

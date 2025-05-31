@@ -6,6 +6,7 @@ import { LanguageContext } from '../LanguageContext';
 import translations from '../translations.jsx';
 
 const CreateCoursePage = () => {
+  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
   const { bengaliActive } = useContext(LanguageContext);
   const lang = bengaliActive ? 'bn' : 'en';
 
