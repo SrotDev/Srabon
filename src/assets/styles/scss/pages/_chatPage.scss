@@ -97,11 +97,6 @@
     align-items: center;
     gap: 8px;
   }
-
-  // 🟩 Invisible speaker icon (for programmatic click)
-  button {
-    display: none;
-  }
 }
 
 .chat-message.listening-indicator .markdown-message {

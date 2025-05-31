@@ -24,9 +24,15 @@
 
   .class-box,
   .subject-box {
+    display: flex;
+    align-items: center;
     font-size: 16px;
     color: #007bff;
     font-weight: 500;
+  }
+
+  .subject-box {
+    gap: 12px; // Horizontal gap between subject and sound button
   }
 
   .share-btn {
@@ -37,6 +43,39 @@
     border-radius: 5px;
     border: none;
     cursor: pointer;
+  }
+
+  // 🎧 Modern play sound button styling
+  .play-sound-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 50%;
+    background-color: #ecf6fc;
+    color: #007bff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 123, 255, 0.2);
+
+    &.active {
+      background-color: #007bff;
+      color: #ffffff;
+      box-shadow: 0 4px 10px rgba(0, 123, 255, 0.4);
+    }
+
+    &:hover {
+      background-color: #007bff;
+      color: #ffffff;
+      transform: scale(1.1);
+    }
+
+    svg {
+      width: 16px;
+      height: 16px;
+    }
   }
 }
 

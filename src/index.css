@@ -12617,9 +12617,14 @@ a:hover {
 }
 .course-meta .class-box,
 .course-meta .subject-box {
+  display: flex;
+  align-items: center;
   font-size: 16px;
   color: #007bff;
   font-weight: 500;
+}
+.course-meta .subject-box {
+  gap: 12px;
 }
 .course-meta .share-btn {
   margin-left: auto;
@@ -12629,6 +12634,34 @@ a:hover {
   border-radius: 5px;
   border: none;
   cursor: pointer;
+}
+.course-meta .play-sound-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 50%;
+  background-color: #ecf6fc;
+  color: #007bff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 123, 255, 0.2);
+}
+.course-meta .play-sound-btn.active {
+  background-color: #007bff;
+  color: #ffffff;
+  box-shadow: 0 4px 10px rgba(0, 123, 255, 0.4);
+}
+.course-meta .play-sound-btn:hover {
+  background-color: #007bff;
+  color: #ffffff;
+  transform: scale(1.1);
+}
+.course-meta .play-sound-btn svg {
+  width: 16px;
+  height: 16px;
 }
 
 .subtitle {
@@ -12907,85 +12940,87 @@ a:hover {
   background-color: #138d75;
 }
 
-/* CourseArticlePage.scss */
 .course-article-page {
-  background-color: #f9f9f9;
+  background-color: #ffffff;
   padding: 40px;
-  border-radius: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  max-width: 1000px;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  max-width: 900px;
   margin: 50px auto;
   font-family: "Roboto", sans-serif;
-}
-
-.article-header {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  margin-bottom: 20px;
-}
-
-.article-header h1 {
-  font-size: 36px;
-  font-weight: 700;
   color: #333;
 }
 
-.class-meta {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
+.article-header {
+  margin-bottom: 20px;
 }
-
-.class-box, .subject-box {
-  font-size: 18px;
+.article-header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+}
+.article-header .meta-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-top: 8px;
+}
+.article-header .meta-row .class-box {
+  font-size: 1rem;
   color: #007bff;
   font-weight: 500;
+}
+.article-header .meta-row .subject-sound {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.article-header .meta-row .subject-sound .subject-box {
+  font-size: 1rem;
+  color: #007bff;
+  font-weight: 500;
+}
+.article-header .meta-row .subject-sound .play-sound-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 50%;
+  background-color: #ecf6fc;
+  color: #007bff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 123, 255, 0.2);
+}
+.article-header .meta-row .subject-sound .play-sound-btn.active {
+  background-color: #007bff;
+  color: #ffffff;
+  box-shadow: 0 4px 10px rgba(0, 123, 255, 0.4);
+}
+.article-header .meta-row .subject-sound .play-sound-btn:hover {
+  background-color: #007bff;
+  color: #ffffff;
+  transform: scale(1.1);
+}
+.article-header .meta-row .subject-sound .play-sound-btn svg {
+  width: 14px;
+  height: 14px;
 }
 
 .article-content {
   margin-top: 30px;
 }
-
 .article-content h2 {
-  font-size: 24px;
+  font-size: 1.4rem;
   font-weight: 600;
-  color: #333;
+  margin-bottom: 10px;
 }
-
-.article-text {
-  margin-top: 20px;
-  font-size: 18px;
+.article-content .article-text {
+  font-size: 1rem;
   color: #555;
   line-height: 1.6;
-}
-
-.navigation-buttons {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 30px;
-}
-
-.prev-btn, .next-btn {
-  background-color: #007bff;
-  color: white;
-  padding: 12px 25px;
-  font-size: 18px;
-  border-radius: 5px;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  width: 45%;
-}
-
-.prev-btn:hover, .next-btn:hover {
-  background-color: #0056b3;
-}
-
-.prev-btn:disabled, .next-btn:disabled {
-  background-color: #cccccc;
-  cursor: not-allowed;
 }
 
 .flashcards-btn {
@@ -12993,20 +13028,18 @@ a:hover {
   justify-content: center;
   margin-top: 40px;
 }
-
 .flashcards-btn button {
   background-color: #28a745;
-  color: white;
-  padding: 15px 30px;
-  font-size: 18px;
-  border-radius: 5px;
+  color: #ffffff;
+  padding: 12px 24px;
+  font-size: 1rem;
   border: none;
+  border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s ease;
 }
-
 .flashcards-btn button:hover {
-  background-color: #218838;
+  background-color: #268b3c;
 }
 
 /* FlashcardsPage.scss */
@@ -13228,17 +13261,39 @@ a:hover {
   display: block;
   color: #555;
 }
-.create-course-page .create-course-form .form-field input {
+.create-course-page .create-course-form .form-field input[type=text],
+.create-course-page .create-course-form .form-field input[type=file] {
   width: 100%;
   padding: 10px;
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 4px;
   outline: none;
-  transition: border-color 0.3s;
+  transition: border-color 0.3s, box-shadow 0.3s;
 }
-.create-course-page .create-course-form .form-field input:focus {
+.create-course-page .create-course-form .form-field input[type=text]:focus,
+.create-course-page .create-course-form .form-field input[type=file]:focus {
   border-color: #4db8b8;
+  box-shadow: 0 0 0 2px rgba(77, 184, 184, 0.2);
+}
+.create-course-page .create-course-form .form-field input[type=file] {
+  padding: 8px;
+  background-color: #f9f9f9;
+  border-style: dashed;
+  color: #555;
+  cursor: pointer;
+}
+.create-course-page .create-course-form .form-field input[type=file]::file-selector-button {
+  background-color: #4db8b8;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.create-course-page .create-course-form .form-field input[type=file]::file-selector-button:hover {
+  background-color: #3b8b8b;
 }
 .create-course-page .create-course-form .form-actions {
   display: flex;
@@ -13363,9 +13418,6 @@ a:hover {
   display: flex;
   align-items: center;
   gap: 8px;
-}
-.chat-message button {
-  display: none;
 }
 
 .chat-message.listening-indicator .markdown-message {

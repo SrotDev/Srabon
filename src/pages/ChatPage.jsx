@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { marked } from "marked";
 import { LanguageContext } from "../LanguageContext";
 import translations from "../translations.jsx";
-import { FaMicrophone, FaPaperPlane, FaVolumeUp } from "react-icons/fa";
+import { FaMicrophone, FaPaperPlane } from "react-icons/fa";
 
 const ChatPage = () => {
   const { bengaliActive } = useContext(LanguageContext);
@@ -14,27 +14,10 @@ const ChatPage = () => {
   const [userMessage, setUserMessage] = useState("");
   const [chatHistory, setChatHistory] = useState([]);
   const [isSending, setIsSending] = useState(false);
-  const [aiTyping, setAiTyping] = useState(false);
   const [isListening, setIsListening] = useState(false);
-  const [isResponsiveVoiceLoaded, setIsResponsiveVoiceLoaded] = useState(false);
+  const [firstRequest, setFirstRequest] = useState(true);
 
-  const isFirstMessage = useRef(true);
   const chatEndRef = useRef(null);
-  const shouldSpeakNextAiResponse = useRef(false);
-
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://code.responsivevoice.org/responsivevoice.js?key=206RQ6BM";
-    script.async = true;
-    script.onload = () => {
-      console.log("✅ ResponsiveVoice script loaded!");
-      setIsResponsiveVoiceLoaded(true);
-    };
-    script.onerror = () => {
-      console.error("❌ Failed to load ResponsiveVoice script.");
-    };
-    document.body.appendChild(script);
-  }, []);
 
   const handleMessageChange = (e) => setUserMessage(e.target.value);
 
@@ -46,101 +29,99 @@ const ChatPage = () => {
     }
   };
 
-  const handleSendMessage = async (text) => {
+  // Stop sound on navigating back
+  const handleBack = () => {
+    stopSpeaking();
+    navigate("/functionalities");
+  };
+
+  const handleSendMessage = async (text, speakIt = false) => {
     if (!text.trim() || isSending) return;
 
-    // Stop previous AI voice
+    // Stop any ongoing speaking when sending a new message
     stopSpeaking();
 
     const newMessage = { from: "user", text };
     setChatHistory((prev) => [...prev, newMessage]);
     setUserMessage("");
     setIsSending(true);
-    setAiTyping(true);
 
     try {
+      // Include limit: "false" only for the first request after reload/bengaliActive change
+      const requestBody = firstRequest
+        ? { message: text, limit: "false" }
+        : { message: text };
+
       const response = await fetch(`${apiBaseUrl}/chats/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-        body: JSON.stringify({
-          message: newMessage.text,
-          limit: isFirstMessage.current ? "false" : "true",
-        }),
+        body: JSON.stringify(requestBody),
       });
 
       const data = await response.json();
       const aiMessage = { from: "ai", text: data.message };
       setChatHistory((prev) => [...prev, aiMessage]);
 
-      if (shouldSpeakNextAiResponse.current) {
-        setTimeout(() => {
-          const speakerButtons = document.querySelectorAll(".speaker-button");
-          const lastSpeaker = speakerButtons[speakerButtons.length - 1];
-          if (lastSpeaker) lastSpeaker.click();
-        }, 100);
-        shouldSpeakNextAiResponse.current = false;
+      if (speakIt) {
+        speakAIResponse(aiMessage.text);
       }
-
-      isFirstMessage.current = false;
     } catch (error) {
-      console.error("❌ Error while sending message:", error);
+      console.error("❌ Error:", error);
     } finally {
-      setAiTyping(false);
       setIsSending(false);
+      setFirstRequest(false); // After first request, don't include limit anymore
     }
   };
 
-  const handleSubmit = () => handleSendMessage(userMessage);
+  const speakAIResponse = (text) => {
+    if (!text.trim()) return;
+
+    const voice = bengaliActive ? "Bangla India Female" : "US English Female";
+
+    if (window.responsiveVoice) {
+      window.responsiveVoice.speak(text, voice);
+    } else if ("speechSynthesis" in window) {
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = bengaliActive ? "bn-IN" : "en-US";
+      window.speechSynthesis.speak(utterance);
+    } else {
+      console.error("No speech synthesis available.");
+    }
+  };
 
   const startListening = () => {
-    if (!("webkitSpeechRecognition" in window) && !("SpeechRecognition" in window)) {
-      alert("Sorry, your browser does not support speech recognition.");
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      alert("SpeechRecognition not supported!");
       return;
     }
 
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     const recognition = new SpeechRecognition();
-
     recognition.lang = bengaliActive ? "bn-BD" : "en-US";
     recognition.interimResults = false;
-    recognition.maxAlternatives = 1;
 
     recognition.onstart = () => setIsListening(true);
     recognition.onresult = (event) => {
       const transcript = event.results[0][0].transcript;
       setIsListening(false);
-      shouldSpeakNextAiResponse.current = true;
-      handleSendMessage(transcript);
+      handleSendMessage(transcript, true);
     };
-    recognition.onerror = (event) => {
-      console.error("❌ Speech recognition error:", event.error);
+    recognition.onerror = (e) => {
+      console.error(e);
       setIsListening(false);
     };
     recognition.onend = () => setIsListening(false);
-
     recognition.start();
   };
 
-  const speakText = (text) => {
-    if (!text.trim()) return;
+  const handleSubmit = () => handleSendMessage(userMessage);
 
-    const voice = bengaliActive ? "Bangla India Female" : "US English Female";
-
-    if (isResponsiveVoiceLoaded && window.responsiveVoice) {
-      window.responsiveVoice.speak(text, voice);
-    } else if ("speechSynthesis" in window) {
-      const synth = window.speechSynthesis;
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = bengaliActive ? "bn-IN" : "en-US";
-      synth.cancel();
-      synth.speak(utterance);
-    }
-  };
-
+  // Initialize chat and reset firstRequest on reload or language toggle
   useEffect(() => {
+    setFirstRequest(true); // Reset to true on reload/bengaliActive change
     const name = localStorage.getItem("name") || "there";
     const welcomeMessage = {
       from: "ai",
@@ -149,21 +130,30 @@ const ChatPage = () => {
     setChatHistory([welcomeMessage]);
   }, [bengaliActive]);
 
+  // Auto-scroll to bottom
   useEffect(() => {
     if (chatEndRef.current) {
       chatEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [chatHistory]);
 
+  // Stop speaking on page unload
+  useEffect(() => {
+    const handleUnload = () => stopSpeaking();
+    window.addEventListener("beforeunload", handleUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleUnload);
+    };
+  }, []);
+
   return (
     <div className="chat-page">
       <div className="chat-container">
         <div className="chat-header">
-          <div className="header-buttons">
-            <button onClick={() => navigate("/functionalities")} className="back-button">
-              ← Back
-            </button>
-          </div>
+          <button onClick={handleBack} className="back-button">
+            ← Back
+          </button>
           <h2>{translations[lang].chat_head}</h2>
         </div>
 
@@ -174,23 +164,8 @@ const ChatPage = () => {
                 className="markdown-message"
                 dangerouslySetInnerHTML={{ __html: marked(msg.text) }}
               />
-              {msg.from === "ai" && (
-                <button
-                  className="speaker-button"
-                  style={{ display: "none" }}
-                  onClick={() => speakText(msg.text)}
-                  title="Play Audio"
-                >
-                  <FaVolumeUp />
-                </button>
-              )}
             </div>
           ))}
-          {aiTyping && (
-            <div className="chat-message ai typing">
-              <div className="markdown-message">{translations[lang].ai_type}</div>
-            </div>
-          )}
           {isListening && (
             <div className="chat-message listening-indicator">
               <div className="markdown-message">
@@ -209,7 +184,12 @@ const ChatPage = () => {
             disabled={isSending}
           />
           <div className="input-buttons">
-            <button onClick={startListening} className="voice-button" disabled={isSending} title="Voice Input">
+            <button
+              onClick={startListening}
+              className="voice-button"
+              disabled={isSending}
+              title="Voice Input"
+            >
               <FaMicrophone />
             </button>
             <button

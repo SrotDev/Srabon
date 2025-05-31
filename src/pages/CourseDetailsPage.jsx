@@ -1,28 +1,25 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import ClipLoader from "react-spinners/ClipLoader";
+import { FaVolumeUp } from 'react-icons/fa';
 import { LanguageContext } from '../LanguageContext';
 import translations from '../translations.jsx';
-
 
 const CourseDetailsPage = () => {
   const { bengaliActive } = useContext(LanguageContext);
   const lang = bengaliActive ? 'bn' : 'en';
   const UNSPLASH_ACCESS_KEY = import.meta.env.VITE_UNSPLASH_ACCESS;
   const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
-  const location = useLocation(); // Get location from the router
-  const { name } = location.state || {}; // Get course name passed from CourseCard
-  const [course, setCourse] = useState(null); // Store the course data
-  const [imageUrl, setImageUrl] = useState(null); // Store the fetched image URL
-  const navigate = useNavigate(); // For navigation
+  const location = useLocation();
+  const { name } = location.state || {};
+  const [course, setCourse] = useState(null);
+  const [imageUrl, setImageUrl] = useState(null);
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
+  const [isSpeaking, setIsSpeaking] = useState(false);
 
-  // Fetch course data from backend API
   useEffect(() => {
-    if (!name) {
-      console.log("Nam nai");
-      return;
-    }; // If no course name is provided, stop
+    if (!name) return;
 
     const fetchCourseData = async () => {
       try {
@@ -40,10 +37,7 @@ const CourseDetailsPage = () => {
         }
 
         const data = await res.json();
-        console.log('Fetched course data:', data); // Log the data
-        setCourse(data); // Store the course data
-
-        // Fetch image from Unsplash API based on the course subject
+        setCourse(data);
         fetchImage(data.subject);
       } catch (err) {
         console.error('Error fetching course data:', err);
@@ -55,9 +49,7 @@ const CourseDetailsPage = () => {
         const imageRes = await fetch(
           `https://api.unsplash.com/search/photos?query=${subject}&per_page=1&client_id=${UNSPLASH_ACCESS_KEY}`
         );
-
         const imageData = await imageRes.json();
-        console.log('Fetched image data:', imageData); // Log the image data
         const image = imageData.results[0]?.urls?.regular;
         setImageUrl(image || 'https://via.placeholder.com/300x180?text=No+Image');
       } catch (err) {
@@ -68,18 +60,43 @@ const CourseDetailsPage = () => {
       }
     };
 
-    fetchCourseData(); // Call the function to fetch course data
-  }, [name]); // Trigger when 'name' changes
+    fetchCourseData();
+  }, [name]);
 
   const handleEnrollNow = () => {
-    // Navigate to CourseArticlePage with course data
     navigate(`/courseArticle/${name}`, { state: { course } });
-    console.log("Ahis");
-    console.log(course);
   };
 
   const handleAllCourses = () => {
     navigate('/courses');
+  };
+
+  const speakCourseDetails = () => {
+    if (!course) return;
+
+    const title = bengaliActive && course.subject !== "English" ? course["title-bn"] : course.title;
+    const description = bengaliActive && course.subject !== "English" ? course["description-bn"] : course.description;
+    const textToSpeak = `${title}. ${description}`;
+    const voice = bengaliActive ? "Bangla India Female" : "US English Female";
+
+    if (isSpeaking) {
+      if (window.responsiveVoice && window.responsiveVoice.isPlaying()) {
+        window.responsiveVoice.cancel();
+      } else if ("speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+      }
+      setIsSpeaking(false);
+    } else {
+      if (window.responsiveVoice) {
+        window.responsiveVoice.speak(textToSpeak, voice, { onend: () => setIsSpeaking(false) });
+      } else if ("speechSynthesis" in window) {
+        const utterance = new SpeechSynthesisUtterance(textToSpeak);
+        utterance.lang = bengaliActive ? "bn-IN" : "en-US";
+        utterance.onend = () => setIsSpeaking(false);
+        window.speechSynthesis.speak(utterance);
+      }
+      setIsSpeaking(true);
+    }
   };
 
   if (loading) {
@@ -90,21 +107,36 @@ const CourseDetailsPage = () => {
     );
   }
 
-  const courseDescription = bengaliActive && course.subject != "English" ? course["description-bn"] : course.description;
+  const courseTitle = bengaliActive && course.subject !== "English"
+    ? course["title-bn"]
+    : course.title;
+
+  const courseDescription = bengaliActive && course.subject !== "English"
+    ? course["description-bn"]
+    : course.description;
 
   return (
     <div className="course-details">
       <div className="details-header">
-        <h1>{course.title.toUpperCase()}</h1>
+        <h1>{courseTitle.toUpperCase()}</h1>
       </div>
 
       <div className="course-meta">
         <p className="class-box">Class: {localStorage.getItem('class')}</p>
-        <p className="subject-box">{course.subject}</p>
-        {/* <button className="share-btn">Share</button> */}
+        <p className="subject-box">
+          {course.subject}
+          <button
+            onClick={speakCourseDetails}
+            className={`play-sound-btn ${isSpeaking ? 'active' : ''}`}
+            title={isSpeaking ? "Stop" : "Play"}
+          >
+            <FaVolumeUp size={18} />
+          </button>
+        </p>
       </div>
 
-      <div className="subtitle">{ translations[lang].desc }</div>
+      <div className="subtitle">{translations[lang].desc}</div>
+
       <div className="course-content">
         <div className="description">
           <img src={imageUrl} alt={course.subject} className="course-image" />
@@ -113,8 +145,12 @@ const CourseDetailsPage = () => {
       </div>
 
       <div className="buttons">
-        <button className="all-courses-btn" onClick={handleAllCourses}>{translations[lang].all_courses}</button>
-        <button className="enroll-btn" onClick={handleEnrollNow}>{translations[lang].start_course}</button>
+        <button className="all-courses-btn" onClick={handleAllCourses}>
+          {translations[lang].all_courses}
+        </button>
+        <button className="enroll-btn" onClick={handleEnrollNow}>
+          {translations[lang].start_course}
+        </button>
       </div>
     </div>
   );

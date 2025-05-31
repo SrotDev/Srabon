@@ -87,6 +87,9 @@ const translations = {
     "course_success": "Course Generated Successfully",
     "course_failed": "Failed to generate course",
     "something_wrong": "Something went wrong",
+    "optional_pdf": "Optional PDF",
+    "generate": "Generate",
+    "generating": "Generating...",
 
     // FlashcardsPage
     "load_flashcards": "Loading flashcards...",
@@ -177,7 +180,7 @@ const translations = {
     "grow_skill_1": "তোমার দক্ষতা বাড়াও",
     "grow_skill_2": "আমাদের কোর্সের মাধ্যমে",
 
-    "ai_gen_course": "এআই-প্রজন্মের কোর্স তৈরি করো",
+    "ai_gen_course": "এআই এর সাহায্যে কোর্স তৈরি করো",
     "course_sub": "কোর্সের বিষয়",
     "enter_course_sub": "কোর্সের বিষয় লিখো",
     "course_title": "কোর্সের শিরোনাম",
@@ -186,6 +189,9 @@ const translations = {
     "course_success": "কোর্স সফলভাবে তৈরি করা হয়েছে",
     "course_failed": "কোর্স তৈরি ব্যর্থ হয়েছে",
     "something_wrong": "কিছু ভুল হয়েছে",
+    "optional_pdf": "অপশনাল পিডিএফ",
+    "generate": "কোর্স তৈরি করো",
+    "generating": "কোর্স তৈরি হচ্ছে ...",
 
     "load_flashcards": "ফ্ল্যাশকার্ড লোড হচ্ছে...",
     "previous": "পূর্ববর্তী",
