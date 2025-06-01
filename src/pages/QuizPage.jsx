@@ -12,6 +12,7 @@ const QuizPage = () => {
   const course = location.state?.course;
   const navigate = useNavigate();
   const [selectedAnswers, setSelectedAnswers] = useState(new Array(6).fill(null));
+  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 
   if (!course) {
     return <div className="loading">{translations[lang].load_quiz}</div>;
@@ -29,7 +30,7 @@ const QuizPage = () => {
     setSelectedAnswers(updatedAnswers);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const total = questions.length;
     let score = 0;
@@ -45,9 +46,34 @@ const QuizPage = () => {
       }
     });
 
+    // 1️⃣ Show score toast
     toast.success(`${translations[lang].your_score}${score}/${total}!`);
 
-    // Navigate to quiz solution page with data
+    // 2️⃣ Update the user's total score via API
+    try {
+      const res = await fetch(`${apiBaseUrl}/score/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
+        body: JSON.stringify({ delta_score: score }),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        const totalScore = data.score;
+        toast.success(`${translations[lang].toast_score_increased}${totalScore}`);
+      } else {
+        console.error('Failed to update score');
+        toast.error('Failed to update score');
+      }
+    } catch (err) {
+      console.error('Error updating score:', err);
+      toast.error('Error updating score');
+    }
+
+    // 3️⃣ Navigate to quiz solution page
     navigate(`/quizSolution/${name}`, {
       state: {
         course,

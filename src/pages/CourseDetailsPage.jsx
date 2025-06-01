@@ -4,6 +4,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import { FaVolumeUp } from 'react-icons/fa';
 import { LanguageContext } from '../LanguageContext';
 import translations from '../translations.jsx';
+import { toast } from 'react-toastify'; // 📌 Import toast!
 
 const CourseDetailsPage = () => {
   const { bengaliActive } = useContext(LanguageContext);
@@ -89,8 +90,32 @@ const CourseDetailsPage = () => {
     };
   }, []);
 
-  const handleEnrollNow = () => {
+  const handleEnrollNow = async () => {
     stopSpeaking();
+
+    try {
+      const res = await fetch(`${apiBaseUrl}/score/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
+        body: JSON.stringify({ delta_score: 5 }),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        const totalScore = data.score;
+        toast.success(`${translations[lang].toast_score_increased}${totalScore}`);
+      } else {
+        console.error('Failed to update score');
+        toast.error('Failed to update score');
+      }
+    } catch (err) {
+      console.error('Error updating score:', err);
+      toast.error('Error updating score');
+    }
+
     navigate(`/courseArticle/${name}`, { state: { course } });
   };
 

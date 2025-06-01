@@ -84,6 +84,12 @@ const QuizSolutionPage = () => {
           >
             {translations[lang].all_courses}
           </button>
+          <button
+            className="qs-leaderboard-btn"
+            onClick={() => navigate('/leaderboard')}
+          >
+            {translations[lang].see_leaderboard}
+          </button>
         </div>
       </div>
     </div>

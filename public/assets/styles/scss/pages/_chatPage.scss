@@ -54,7 +54,6 @@
       scroll-behavior: smooth;
 
       .chat-message {
-        max-width: 70%;
         padding: 12px 18px;
         border-radius: 20px;
         font-size: 16px;
@@ -75,8 +74,8 @@
         }
 
         &.typing {
+          opacity: 0.5;
           font-style: italic;
-          opacity: 0.6;
         }
 
         .markdown-message {
@@ -104,6 +103,27 @@
           }
         }
       }
+
+      .listening-indicator {
+        background: #fff3cd;
+        border: 1px solid #ffeeba;
+        color: #856404;
+        border-radius: 10px;
+        padding: 10px 15px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-style: italic;
+        font-size: 15px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        animation: fadeIn 0.3s ease-in-out;
+        justify-content: center; // center-align content
+        align-self: center;
+
+        svg {
+          color: #856404;
+        }
+      }
     }
 
     .chat-input {
@@ -118,7 +138,7 @@
         border: 1px solid #ccc;
         border-radius: 10px;
         resize: none;
-        height: 50px;
+        height: 100px;
       }
 
       .input-buttons {
@@ -148,12 +168,6 @@
           &:disabled {
             background-color: #ccc;
             cursor: not-allowed;
-          }
-
-          .send-icon {
-            display: inline-block;
-            transform: translateX(1px);
-            font-weight: bold;
           }
         }
       }

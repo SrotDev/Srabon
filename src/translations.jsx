@@ -73,6 +73,7 @@ const translations = {
     "desc": "Description",
     "all_courses": "See All Courses",
     "start_course": "Start Course",
+    "toast_score_increased": "Your score has increased! Total score: ",
 
     // CoursesPage
     "grow_skill_1": "Grow up your skills",
@@ -107,11 +108,17 @@ const translations = {
     "not_found_body": "It seems you've taken a wrong turn. But don't worry, we'll help you get back on track!",
     "home_btn": "Go Home",
 
-    // QuizPage
+    // QuizPage & QuizSolution
     "load_quiz": "Loading quiz...",
     "quiz_end": " - Quiz",
     "submit_quiz": "Submit Quiz",
     "your_score": "You scored ",
+    "explanation": "Explanation",
+    "see_leaderboard": "🏆 See Leaderboard",
+
+    // Leaderboards
+    "leaderboard": "🏆 Leaderboard",
+    "go_to_home": "Go to Home"
     
   },
   
@@ -132,7 +139,7 @@ const translations = {
     "username": "ইউজার নেম",
     "email": "ইমেইল",
     "password": "পাসওয়ার্ড",
-    "continue": "চালিয়ে যাও",
+    "continue": "পরবর্তী পদক্ষেপ",
     "no_account": "তোমার কোনো অ্যাকাউন্ট নেই?",
     "yes_account": "তোমার ইতিমধ্যেই অ্যাকাউন্ট আছে?",
     "auth_link_register": "এখনই রেজিস্টার করো",
@@ -178,6 +185,7 @@ const translations = {
     "desc": "বিবরণ",
     "all_courses": "সব কোর্স দেখো",
     "start_course": "কোর্স শুরু করো",
+    "toast_score_increased": "তোমার স্কোর বৃদ্ধি পেয়েছে! মোট স্কোর: ",
 
     "grow_skill_1": "তোমার দক্ষতা বাড়াও",
     "grow_skill_2": "আমাদের কোর্সের মাধ্যমে",
@@ -210,7 +218,12 @@ const translations = {
     "load_quiz": "কুইজ লোড হচ্ছে...",
     "quiz_end": " - কুইজ",
     "submit_quiz": "কুইজ জমা দাও",
-    "your_score": "তোমার প্রাপ্ত নম্বর "
+    "your_score": "তোমার প্রাপ্ত নম্বর ",
+    "explanation": "ব্যাখ্যা",
+    "see_leaderboard": "🏆 লিডারবোর্ড দেখো",
+
+    "leaderboard": "🏆 লিডারবোর্ড",
+    "go_to_home": "হোমে ফিরে যাই"
   }
 }
 

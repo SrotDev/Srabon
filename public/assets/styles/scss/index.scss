@@ -23,24 +23,21 @@
 
 // pages
 @use 'pages/loginSignup.scss';
-
 @use 'pages/studentJourney';
 @use 'pages/courses';
-
 @use 'pages/courseDetails';
 @use 'pages/functionalities';
 @use 'pages/notFound';
-
 @use 'pages/courseArticle';
 @use 'pages/flashcards';
 @use 'pages/quiz';
-
 @use 'pages/createCourse';
-
 @use 'pages/chatPage';
 @use 'pages/quizSolution';
+@use 'pages/leaderboard';
 
 
 // Load responsive styles
 @use 'responsive/tablet';
 @use 'responsive/mobile';
+

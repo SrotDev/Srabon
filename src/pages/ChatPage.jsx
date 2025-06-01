@@ -29,7 +29,6 @@ const ChatPage = () => {
     }
   };
 
-  // Stop sound on navigating back
   const handleBack = () => {
     stopSpeaking();
     navigate("/functionalities");
@@ -38,7 +37,6 @@ const ChatPage = () => {
   const handleSendMessage = async (text, speakIt = false) => {
     if (!text.trim() || isSending) return;
 
-    // Stop any ongoing speaking when sending a new message
     stopSpeaking();
 
     const newMessage = { from: "user", text };
@@ -46,12 +44,10 @@ const ChatPage = () => {
     setUserMessage("");
     setIsSending(true);
 
-    // Show temporary "AI is typing..." message
-    const typingMessage = { from: "ai", text: translations[lang].ai_type };
+    const typingMessage = { from: "ai", text: translations[lang].ai_type, typing: true };
     setChatHistory((prev) => [...prev, typingMessage]);
 
     try {
-      // Include limit: "false" only for the first request after reload/bengaliActive change
       const requestBody = firstRequest
         ? { message: text, limit: "false" }
         : { message: text };
@@ -67,9 +63,8 @@ const ChatPage = () => {
 
       const data = await response.json();
 
-      // Replace the typing message with the actual AI response
       setChatHistory((prev) => [
-        ...prev.slice(0, -1), // remove typing message
+        ...prev.slice(0, -1),
         { from: "ai", text: data.message },
       ]);
 
@@ -80,7 +75,7 @@ const ChatPage = () => {
       console.error("❌ Error:", error);
     } finally {
       setIsSending(false);
-      setFirstRequest(false); // After first request, don't include limit anymore
+      setFirstRequest(false);
     }
   };
 
@@ -95,8 +90,6 @@ const ChatPage = () => {
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.lang = bengaliActive ? "bn-IN" : "en-US";
       window.speechSynthesis.speak(utterance);
-    } else {
-      console.error("No speech synthesis available.");
     }
   };
 
@@ -127,9 +120,8 @@ const ChatPage = () => {
 
   const handleSubmit = () => handleSendMessage(userMessage);
 
-  // Initialize chat and reset firstRequest on reload or language toggle
   useEffect(() => {
-    setFirstRequest(true); // Reset to true on reload/bengaliActive change
+    setFirstRequest(true);
     const name = localStorage.getItem("name") || "there";
     const welcomeMessage = {
       from: "ai",
@@ -138,14 +130,12 @@ const ChatPage = () => {
     setChatHistory([welcomeMessage]);
   }, [bengaliActive]);
 
-  // Auto-scroll to bottom
   useEffect(() => {
     if (chatEndRef.current) {
       chatEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [chatHistory]);
 
-  // Stop speaking on page unload
   useEffect(() => {
     const handleUnload = () => stopSpeaking();
     window.addEventListener("beforeunload", handleUnload);
@@ -167,7 +157,10 @@ const ChatPage = () => {
 
         <div className="chat-history">
           {chatHistory.map((msg, index) => (
-            <div key={index} className={`chat-message ${msg.from}`}>
+            <div
+              key={index}
+              className={`chat-message ${msg.from} ${msg.typing ? "typing" : ""}`}
+            >
               <div
                 className="markdown-message"
                 dangerouslySetInnerHTML={{ __html: marked(msg.text) }}
@@ -176,9 +169,7 @@ const ChatPage = () => {
           ))}
           {isListening && (
             <div className="chat-message listening-indicator">
-              <div className="markdown-message">
-                <FaMicrophone /> {translations[lang].listening}
-              </div>
+              <FaMicrophone /> {translations[lang].listening}
             </div>
           )}
           <div ref={chatEndRef} />

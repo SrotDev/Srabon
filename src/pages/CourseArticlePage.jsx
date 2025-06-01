@@ -4,6 +4,7 @@ import { marked } from 'marked';
 import { FaVolumeUp } from 'react-icons/fa';
 import { LanguageContext } from '../LanguageContext';
 import translations from '../translations.jsx';
+import { toast } from 'react-toastify'; // 📌 import toast!
 
 const CourseArticlePage = () => {
   const { bengaliActive } = useContext(LanguageContext);
@@ -14,6 +15,7 @@ const CourseArticlePage = () => {
   const [articleHtml, setArticleHtml] = useState('');
   const [isSpeaking, setIsSpeaking] = useState(false);
   const navigate = useNavigate();
+  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 
   const stopSpeaking = () => {
     if (window.responsiveVoice && window.responsiveVoice.isPlaying()) {
@@ -49,12 +51,32 @@ const CourseArticlePage = () => {
     };
   }, []);
 
-  if (!course) {
-    return <div className="loading">{translations[lang].load_article}</div>;
-  }
-
-  const handleSeeFlashcards = () => {
+  const handleSeeFlashcards = async () => {
     stopSpeaking();
+
+    try {
+      const res = await fetch(`${apiBaseUrl}/score/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
+        body: JSON.stringify({ delta_score: 10 }),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        const totalScore = data.score;
+        toast.success(`${translations[lang].toast_score_increased}${totalScore}`);
+      } else {
+        console.error('Failed to update score');
+        toast.error('Failed to update score');
+      }
+    } catch (err) {
+      console.error('Error updating score:', err);
+      toast.error('Error updating score');
+    }
+
     navigate(`/flashcards/${name}`, { state: { course } });
   };
 
@@ -78,6 +100,10 @@ const CourseArticlePage = () => {
       setIsSpeaking(true);
     }
   };
+
+  if (!course) {
+    return <div className="loading">{translations[lang].load_article}</div>;
+  }
 
   return (
     <div className="course-article-page">

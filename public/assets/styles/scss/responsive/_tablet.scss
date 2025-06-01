@@ -137,12 +137,32 @@
     padding: 18px;
   }
 
-  .chat-header h2 { font-size: 22px; }
-  .back-button { font-size: 15px; padding: 7px 16px; }
-  .chat-message { max-width: 85%; font-size: 15.5px; padding: 12px 16px; }
-  .chat-input textarea { font-size: 14.5px; }
-  .send-button { width: 44px; height: 44px; font-size: 18px; }
+  .chat-header h2 {
+    font-size: 22px;
+  }
+
+  .back-button {
+    font-size: 15px;
+    padding: 7px 16px;
+  }
+
+  .chat-message {
+    max-width: 85%;
+    font-size: 15.5px;
+    padding: 12px 16px;
+  }
+
+  .chat-input textarea {
+    font-size: 14.5px;
+  }
+
+  .send-button {
+    width: 44px;
+    height: 44px;
+    font-size: 18px;
+  }
 }
+
 
 // Course Details
 @media (max-width: 900px) {

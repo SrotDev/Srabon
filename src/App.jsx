@@ -16,6 +16,7 @@ import CreateCoursePage from "./pages/CreateCoursePage";
 import ChatPage from "./pages/ChatPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import QuizSolutionPage from "./pages/QuizSolutionPage";
+import Leaderboard from "./pages/Leaderboard";
 
 const App = () => {
   const [course, setCourse] = useState(null);
@@ -45,6 +46,7 @@ const App = () => {
         <Route path="quiz/:name" element={<QuizPage />} />
         <Route path="quizSolution/:name" element={<QuizSolutionPage />} />
         <Route path="functionalities" element={<FunctionalitiesPage />} />
+        <Route path="leaderboard" element={<Leaderboard />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
