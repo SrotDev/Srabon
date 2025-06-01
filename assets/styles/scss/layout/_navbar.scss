@@ -16,75 +16,100 @@
     font-size: 1rem;
     font-weight: bold;
     color: #000;
-  }
 
-  img {
-      height: '50px';
+    img {
+      height: 50px;
     }
+  }
 
   &__links {
     display: flex;
+    align-items: center;
     gap: 2.7rem;
     font-size: 1.1rem;
     list-style: none;
+    margin: 0;
+    padding: 0;
 
-    li a {
-      font-weight: 500;
-      transition: color 0.3s ease;
+    li {
+      display: flex;
+      align-items: center;
 
-      &:hover {
-        color: #1abc9c;
+      a {
+        font-weight: 500;
+        transition: color 0.3s ease;
+
+        &:hover {
+          color: #1abc9c;
+        }
+
+        &.active {
+          color: #278f7a;
+        }
       }
 
-      &.active {
-        color: #278f7a;
+      .logout-btn {
+        background-color: black;
+        color: white;
+        border: none;
+        padding: 6px 20px;
+        border-radius: 50px;
+        font-size: 16px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+          background-color: #28947e;
+        }
+      }
+
+      .toggle-lang-switch {
+        position: relative;
+        display: inline-block;
+        width: 50px;
+        height: 25px;
+        margin-left: 2px;
+        margin-right: 2px;
+
+        input {
+          opacity: 0;
+          width: 0;
+          height: 0;
+        }
+
+        .slider {
+          position: absolute;
+          cursor: pointer;
+          background-color: #ccc;
+          border-radius: 34px;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          transition: 0.4s;
+
+          &:before {
+            content: "";
+            position: absolute;
+            height: 21px;
+            width: 21px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: 0.4s;
+            border-radius: 50%;
+          }
+        }
+
+        input:checked + .slider {
+          background-color: #2ecc71;
+        }
+
+        input:checked + .slider:before {
+          transform: translateX(24px);
+        }
       }
     }
   }
 }
-
-.navbar__links {
-  display: flex;
-  align-items: center; // ✅ Ensures vertical alignment
-  gap: 2.7rem;
-  font-size: 1.1rem;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-
-  li {
-    display: flex;
-    align-items: center;
-
-    a {
-      font-weight: 500;
-      transition: color 0.3s ease;
-
-      &:hover {
-        color: #1abc9c;
-      }
-
-      &.active {
-        color: #278f7a;
-      }
-    }
-
-    .logout-btn {
-      background-color: black;
-      color: white;
-      border: none;
-      padding: 6px 20px;
-      border-radius: 50px;
-      font-size: 16px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-
-      &:hover {
-        background-color: #278f7a;
-      }
-    }
-  }
-}
-
-

@@ -1,4 +1,5 @@
-// authForm
+// All mobile styles are scoped under .mobile-wrapper to avoid global conflicts
+// Auth Form
 @media (max-width: 600px) {
   .auth-form-wrapper {
     padding: 1.5rem;
@@ -22,13 +23,8 @@
     }
 
     .auth-footer {
-      h2 {
-        font-size: 1.2rem;
-      }
-
-      p {
-        font-size: 0.85rem;
-      }
+      h2 { font-size: 1.2rem; }
+      p  { font-size: 0.85rem; }
     }
   }
 
@@ -40,8 +36,7 @@
   }
 }
 
-
-// hero
+// Hero Section
 @media (max-width: 600px) {
   .hero {
     flex-direction: column;
@@ -88,44 +83,22 @@
   }
 }
 
-
-//typography
+// Typography
 @media (max-width: 600px) {
-  body {
-    font-size: 15px;
-  }
-
-  h1 {
-    font-size: 1.8rem;
-  }
-
-  h2 {
-    font-size: 1.5rem;
-  }
-
-  h3 {
-    font-size: 1.3rem;
-  }
-
-  p {
-    font-size: 0.95rem;
-  }
+  body { font-size: 15px; }
+  h1 { font-size: 1.8rem; }
+  h2 { font-size: 1.5rem; }
+  h3 { font-size: 1.3rem; }
+  p  { font-size: 0.95rem; }
 }
 
-
-// others
+// Utility Classes
 @media (max-width: 600px) {
-  .p-2 {
-    padding: 1rem;
-  }
-
-  .m-1 {
-    margin: 0.5rem;
-  }
+  .p-2 { padding: 1rem; }
+  .m-1 { margin: 0.5rem; }
 }
 
-
-// footer
+// Footer
 @media (max-width: 600px) {
   .site-footer {
     font-size: 13px;
@@ -133,7 +106,7 @@
   }
 }
 
-//mainLayout
+// Main Layout
 @media (max-width: 600px) {
   .layout-wrapper {
     background-position: top;
@@ -141,8 +114,7 @@
   }
 }
 
-
-//navbar
+// Navbar
 @media (max-width: 600px) {
   .navbar {
     padding: 1rem;
@@ -181,7 +153,7 @@
   }
 }
 
-// chatPage
+// Chat Page
 @media (max-width: 600px) {
   .chat-container {
     width: 95%;
@@ -195,42 +167,15 @@
     gap: 10px;
   }
 
-  .chat-header h2 {
-    font-size: 20px;
-  }
-
-  .back-button {
-    font-size: 14px;
-    padding: 6px 14px;
-  }
-
-  .chat-message {
-    max-width: 100%;
-    font-size: 15px;
-    padding: 10px 14px;
-  }
-
-  .chat-input {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 8px;
-  }
-
-  .chat-input textarea {
-    height: 60px;
-    font-size: 14px;
-  }
-
-  .send-button {
-    width: 100%;
-    border-radius: 10px;
-    height: 42px;
-    font-size: 18px;
-  }
+  .chat-header h2 { font-size: 20px; }
+  .back-button { font-size: 14px; padding: 6px 14px; }
+  .chat-message { max-width: 100%; font-size: 15px; padding: 10px 14px; }
+  .chat-input { flex-direction: column; align-items: stretch; gap: 8px; }
+  .chat-input textarea { height: 60px; font-size: 14px; }
+  .send-button { width: 100%; border-radius: 10px; height: 42px; font-size: 18px; }
 }
 
-
-// courseDetail
+// Course Details
 @media (max-width: 600px) {
   .course-details {
     padding: 20px;
@@ -238,11 +183,7 @@
     margin: 30px 15px;
   }
 
-  .details-header h1 {
-    font-size: 24px;
-    text-align: center;
-  }
-
+  .details-header h1 { font-size: 24px; text-align: center; }
   .course-meta {
     flex-direction: column;
     align-items: flex-start;
@@ -255,15 +196,9 @@
       font-size: 14px;
     }
   }
-
-  .subtitle {
-    font-size: 20px;
-    text-align: center;
-  }
-
+  .subtitle { font-size: 20px; text-align: center; }
   .course-content .description {
     font-size: 16px;
-
     img.course-image {
       float: none;
       display: block;
@@ -272,23 +207,11 @@
       margin: 15px auto;
     }
   }
-
-  .buttons {
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-  }
-
-  .enroll-btn,
-  .all-courses-btn {
-    width: 100%;
-    padding: 12px 20px;
-    font-size: 16px;
-  }
+  .buttons { flex-direction: column; align-items: center; gap: 15px; }
+  .enroll-btn, .all-courses-btn { width: 100%; padding: 12px 20px; font-size: 16px; }
 }
 
-
-//courseArticle
+// Course Article
 @media (max-width: 600px) {
   .course-article-page {
     padding: 20px;
@@ -296,87 +219,36 @@
     border-radius: 12px;
   }
 
-  .article-header h1 {
-    font-size: 24px;
-    text-align: center;
-  }
-
-  .class-meta {
-    flex-direction: column;
-    gap: 8px;
-    align-items: flex-start;
-  }
-
-  .class-box, .subject-box {
-    font-size: 16px;
-  }
-
-  .article-content h2 {
-    font-size: 20px;
-    text-align: center;
-  }
-
-  .article-text {
-    font-size: 16px;
-  }
-
-  .navigation-buttons {
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .prev-btn,
-  .next-btn {
-    width: 100%;
-    font-size: 16px;
-    padding: 10px 20px;
-  }
-
-  .flashcards-btn button {
-    width: 100%;
-    font-size: 16px;
-    padding: 12px 20px;
-  }
+  .article-header h1 { font-size: 24px; text-align: center; }
+  .class-meta { flex-direction: column; gap: 8px; align-items: flex-start; }
+  .class-box, .subject-box { font-size: 16px; }
+  .article-content h2 { font-size: 20px; text-align: center; }
+  .article-text { font-size: 16px; }
+  .navigation-buttons { flex-direction: column; gap: 12px; }
+  .prev-btn, .next-btn { width: 100%; font-size: 16px; padding: 10px 20px; }
+  .flashcards-btn button { width: 100%; font-size: 16px; padding: 12px 20px; }
 }
 
-
-//courses
+// Courses Page
 @media (max-width: 600px) {
   .courses-page {
     padding: 2rem 1rem;
 
     .header {
-      h1 {
-        font-size: 1.5rem;
-      }
-
-      p {
-        font-size: 1rem;
-      }
+      h1 { font-size: 1.5rem; }
+      p  { font-size: 1rem; }
     }
 
     .course-slider {
       flex-direction: column;
 
-      .nav-btn {
-        width: 36px;
-        height: 36px;
-        font-size: 16px;
-      }
-
-      .course-cards {
-        flex-direction: column;
-        gap: 1rem;
-        overflow-x: unset;
-        overflow-y: auto;
-        align-items: center;
-        padding: 0;
-      }
+      .nav-btn { width: 36px; height: 36px; font-size: 16px; }
+      .course-cards { flex-direction: column; gap: 1rem; overflow-x: unset; overflow-y: auto; align-items: center; padding: 0; }
     }
   }
 }
 
-//createCourse
+// Create Course
 @media (max-width: 600px) {
   .create-course-page {
     align-items: flex-start;
@@ -387,65 +259,38 @@
       box-shadow: none;
       border-radius: 6px;
 
-      h2 {
-        font-size: 20px;
-      }
+      h2 { font-size: 20px; }
 
       .form-field {
-        label {
-          font-size: 14px;
-        }
-
-        input {
-          font-size: 15px;
-          padding: 8px;
-        }
+        label { font-size: 14px; }
+        input { font-size: 15px; padding: 8px; }
       }
 
       .form-actions {
-        .generate-btn {
-          font-size: 16px;
-          padding: 10px 16px;
-          width: 100%;
-        }
+        .generate-btn { font-size: 16px; padding: 10px 16px; width: 100%; }
       }
     }
   }
 }
 
-//explore
+// Explore Page
 @media (max-width: 600px) {
   .explore-page {
     padding: 1.5rem 1rem;
 
-    .explore-container {
-      width: 100%;
-      padding: 0 0.5rem;
-    }
-
-    .explore-title {
-      font-size: 1.8rem;
-    }
-
+    .explore-container { width: 100%; padding: 0 0.5rem; }
+    .explore-title { font-size: 1.8rem; }
     .explore-filters {
       gap: 0.7rem;
       margin-bottom: 1.5rem;
 
-      .filter-btn {
-        padding: 0.5rem 1.2rem;
-        font-size: 0.9rem;
-      }
+      .filter-btn { padding: 0.5rem 1.2rem; font-size: 0.9rem; }
     }
-
-    .explore-grid {
-      gap: 1rem;
-      grid-template-columns: 1fr;
-    }
+    .explore-grid { gap: 1rem; grid-template-columns: 1fr; }
   }
 }
 
-
-// flashcards
+// Flashcards
 @media (max-width: 600px) {
   .flashcards-page {
     padding: 20px;
@@ -453,51 +298,25 @@
     border-radius: 12px;
   }
 
-  .flashcards-header h1 {
-    font-size: 24px;
-    text-align: center;
-  }
-
-  .class-meta {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.4rem;
-  }
-
-  .class-box, .subject-box {
-    font-size: 16px;
-  }
-
-  .flashcard {
-    width: 100%;
-    padding: 20px;
-  }
-
-  .flashcard-text {
-    font-size: 18px;
-  }
-
+  .flashcards-header h1 { font-size: 24px; text-align: center; }
+  .class-meta { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
+  .class-box, .subject-box { font-size: 16px; }
+  .flashcard { width: 100%; padding: 20px; }
+  .flashcard-text { font-size: 18px; }
   .flashcard-navigation {
     flex-direction: column;
     gap: 1rem;
     align-items: center;
 
-    .prev-btn, .next-btn {
-      width: 100%;
-      font-size: 16px;
-    }
+    .prev-btn, .next-btn { width: 100%; font-size: 16px; }
   }
-
-  .start-quiz-btn button {
-    width: 100%;
-    font-size: 16px;
-  }
+  .start-quiz-btn button { width: 100%; font-size: 16px; }
 }
 
-//loginSignup
+// Login Signup
 @media (max-width: 600px) {
   .login-signup-page {
-    flex-direction:column;
+    flex-direction: column;
     padding: 1rem;
 
     .auth-left,
@@ -515,7 +334,7 @@
   }
 }
 
-//functionalities
+// Functionalities
 @media (max-width: 600px) {
   .functionalities {
     padding: 1rem;
@@ -535,35 +354,22 @@
         }
 
         .greeting-text {
-          h2 {
-            font-size: 2.2rem;
-          }
-          p {
-            font-size: 1rem;
-          }
+          h2 { font-size: 2.2rem; }
+          p  { font-size: 1rem; }
         }
       }
 
       .create-course-card,
       .selected-subjects-card,
-      .ask-ai-card {
-        padding: 1rem;
-      }
+      .ask-ai-card { padding: 1rem; }
 
-      .subject-tags {
-        justify-content: center;
-      }
-
-      .subject-pill {
-        font-size: 0.8rem;
-        padding: 0.4rem 0.8rem;
-      }
+      .subject-tags { justify-content: center; }
+      .subject-pill { font-size: 0.8rem; padding: 0.4rem 0.8rem; }
     }
   }
 }
 
-
-//notFound
+// Not Found
 @media (max-width: 600px) {
   .not-found-page {
     padding: 1rem;
@@ -572,64 +378,30 @@
       padding: 2rem 1rem;
       border-radius: 15px;
 
-      img.not-found-img {
-        max-width: 200px;
-        margin-bottom: 1rem;
-      }
-
-      h1 {
-        font-size: 1.4rem;
-      }
-
-      p {
-        font-size: 0.9rem;
-      }
-
-      .home-btn {
-        padding: 0.6rem 1.2rem;
-        font-size: 0.95rem;
-      }
+      img.not-found-img { max-width: 200px; margin-bottom: 1rem; }
+      h1 { font-size: 1.4rem; }
+      p  { font-size: 0.9rem; }
+      .home-btn { padding: 0.6rem 1.2rem; font-size: 0.95rem; }
     }
   }
 }
 
-//quiz
+// Quiz
 @media (max-width: 600px) {
   .quiz-form-page {
     margin: 20px 10px;
     padding: 25px 15px;
   }
 
-  .quiz-form-header h1 {
-    font-size: 24px;
-  }
-
-  .quiz-form-header .class-meta {
-    flex-direction: column;
-    gap: 6px;
-    align-items: center;
-  }
-
-  .quiz-question {
-    padding: 20px;
-  }
-
-  .quiz-question h3 {
-    font-size: 16px;
-  }
-
-  .quiz-question .options .option-label {
-    font-size: 15px;
-  }
-
-  .submit-quiz-btn {
-    width: 100%;
-    font-size: 16px;
-    padding: 12px;
-  }
+  .quiz-form-header h1 { font-size: 24px; }
+  .quiz-form-header .class-meta { flex-direction: column; gap: 6px; align-items: center; }
+  .quiz-question { padding: 20px; }
+  .quiz-question h3 { font-size: 16px; }
+  .quiz-question .options .option-label { font-size: 15px; }
+  .submit-quiz-btn { width: 100%; font-size: 16px; padding: 12px; }
 }
 
-//studentJourney
+// Student Journey
 @media (max-width: 600px) {
   .survey-container {
     padding: 1rem;
@@ -637,64 +409,28 @@
     min-height: 400px;
   }
 
-  .survey-nav {
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .survey-step h2 {
-    font-size: 1.2rem;
-  }
-
-  .survey-step p {
-    font-size: 1rem;
-  }
-
-  .survey-input {
-    width: 100%;
-    font-size: 1rem;
-    padding: 0.6rem 1rem;
-  }
-
+  .survey-nav { flex-direction: column; gap: 1rem; }
+  .survey-step h2 { font-size: 1.2rem; }
+  .survey-step p { font-size: 1rem; }
+  .survey-input { width: 100%; font-size: 1rem; padding: 0.6rem 1rem; }
   .survey-options {
     flex-direction: row;
     gap: 1rem;
 
-    .circle-btn {
-      width: 42px;
-      height: 42px;
-      font-size: 1rem;
-    }
+    .circle-btn { width: 42px; height: 42px; font-size: 1rem; }
   }
-
-  .subject-grid {
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 0.75rem;
-  }
-
+  .subject-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.75rem; }
   .subject-grid .subject-tile {
     font-size: 1rem;
     padding: 0.6rem 1rem;
 
-    input[type="checkbox"] {
-      transform: scale(1.1);
-    }
+    input[type="checkbox"] { transform: scale(1.1); }
   }
-
-  .progress-indicator .dot {
-    width: 20px;
-    height: 3px;
-  }
-
-  .spinner {
-    width: 32px;
-    height: 32px;
-    border-width: 3px;
-  }
+  .progress-indicator .dot { width: 20px; height: 3px; }
+  .spinner { width: 32px; height: 32px; border-width: 3px; }
 }
 
-
-// toaster
+// Toaster
 @media (max-width: 600px) {
   .Toastify__toast-container {
     top: 50% !important;
@@ -705,11 +441,70 @@
     width: 90vw !important;
     max-width: 320px;
     border-radius: 10px;
-  font-size: 0.95rem;
-
+    font-size: 0.95rem;
   }
 
-  .Toastify__toast {
-    text-align: center;
+  .Toastify__toast { text-align: center; }
+}
+
+// quiz Solution
+@media (max-width: 600px) {
+  .qs-page {
+    padding: 1rem;
+
+    .qs-container {
+      max-width: 100%;
+      min-width: 100%;
+
+      .qs-header {
+        h1 {
+          font-size: 1.6rem;
+        }
+
+        .qs-score-box {
+          font-size: 0.9rem;
+          padding: 0.5rem 1rem;
+        }
+
+        .qs-class-meta {
+          flex-direction: column;
+          align-items: center;
+          gap: 0.4rem;
+        }
+      }
+
+      .qs-content {
+        gap: 1rem;
+
+        .qs-question {
+          h3 {
+            font-size: 0.95rem;
+          }
+
+          .qs-options {
+            grid-template-columns: 1fr;
+          }
+
+          .qs-explanation {
+            padding: 0.5rem 0.7rem;
+
+            h4 {
+              font-size: 0.9rem;
+            }
+
+            p {
+              font-size: 0.85rem;
+            }
+          }
+        }
+      }
+
+      .qs-footer {
+        .qs-all-courses-btn {
+          font-size: 0.9rem;
+          padding: 0.6rem 1rem;
+        }
+      }
+    }
   }
 }
