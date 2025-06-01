@@ -34,18 +34,19 @@ const Navbar = () => {
         <ul className="navbar__links">
           <li><NavLink to="/functionalities" onClick={handleProtectedClick}>{translations[lang].nav_home}</NavLink></li>
           <li><NavLink to="/courses" onClick={handleProtectedClick}>{translations[lang].nav_courses}</NavLink></li>
+          <li><NavLink to="/leaderboard" onClick={handleProtectedClick}>{translations[lang].nav_leaderboard}</NavLink></li>
           <li><NavLink to="/chats" onClick={handleProtectedClick}>{translations[lang].nav_chat}</NavLink></li>
           {!isIndexPage && (
             <li><button className="logout-btn" onClick={handleLogout}>{translations[lang].nav_logout}</button></li>
           )}
-            <li style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span style={{ fontSize: '0.9rem' }}>EN</span>
-              <label className="toggle-lang-switch">
-                <input type="checkbox" checked={bengaliActive} onChange={toggleLanguage} />
-                <span className="slider"></span>
-              </label>
-              <span style={{ fontSize: '0.9rem' }}>BN</span>
-            </li>
+          <li className="lang-switcher">
+            <span>EN</span>
+            <label className="toggle-lang-switch">
+              <input type="checkbox" checked={bengaliActive} onChange={toggleLanguage} />
+              <span className="slider"></span>
+            </label>
+            <span>BN</span>
+          </li>
         </ul>
       </div>
     </nav>

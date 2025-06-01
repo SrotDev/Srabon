@@ -15,6 +15,7 @@ import QuizPage from "./pages/QuizPage";
 import CreateCoursePage from "./pages/CreateCoursePage";
 import ChatPage from "./pages/ChatPage";
 import NotFoundPage from "./pages/NotFoundPage";
+import QuizSolutionPage from "./pages/QuizSolutionPage";
 
 const App = () => {
   const [course, setCourse] = useState(null);
@@ -42,6 +43,7 @@ const App = () => {
           element={<FlashcardsPage course={course} />}
         />
         <Route path="quiz/:name" element={<QuizPage />} />
+        <Route path="quizSolution/:name" element={<QuizSolutionPage />} />
         <Route path="functionalities" element={<FunctionalitiesPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>

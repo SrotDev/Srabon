@@ -5,7 +5,7 @@
   height: 100vh;
   background: #f0f9ff;
   padding: 20px;
-  
+
   .create-course-form {
     background-color: #ffffff;
     border-radius: 8px;
@@ -33,7 +33,8 @@
         color: #555;
       }
 
-      input {
+      input[type="text"],
+      input[type="file"] {
         width: 100%;
         padding: 10px;
         font-size: 16px;
@@ -51,7 +52,7 @@
     .form-actions {
       display: flex;
       justify-content: center;
-      
+
       .generate-btn {
         padding: 10px 20px;
         background-color: #4db8b8;
@@ -65,20 +66,12 @@
         &:hover {
           background-color: #3b8b8b;
         }
+
+        &:disabled {
+          background-color: #b3d9d9;
+          cursor: not-allowed;
+        }
       }
     }
   }
-}
-
-.spinner-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(255, 255, 255, 0.7); // optional dim effect
-  z-index: 9999;
 }

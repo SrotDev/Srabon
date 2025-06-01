@@ -18,6 +18,15 @@ const CourseDetailsPage = () => {
   const [loading, setLoading] = useState(true);
   const [isSpeaking, setIsSpeaking] = useState(false);
 
+  const stopSpeaking = () => {
+    if (window.responsiveVoice && window.responsiveVoice.isPlaying()) {
+      window.responsiveVoice.cancel();
+    } else if ("speechSynthesis" in window) {
+      window.speechSynthesis.cancel();
+    }
+    setIsSpeaking(false);
+  };
+
   useEffect(() => {
     if (!name) return;
 
@@ -63,15 +72,35 @@ const CourseDetailsPage = () => {
     fetchCourseData();
   }, [name]);
 
+  // Stop speaking when bengaliActive changes
+  useEffect(() => {
+    stopSpeaking();
+  }, [bengaliActive]);
+
+  // Stop speaking on location (route) change
+  useEffect(() => {
+    stopSpeaking();
+  }, [location]);
+
+  // Stop speaking when component unmounts (leaving page)
+  useEffect(() => {
+    return () => {
+      stopSpeaking();
+    };
+  }, []);
+
   const handleEnrollNow = () => {
+    stopSpeaking();
     navigate(`/courseArticle/${name}`, { state: { course } });
   };
 
   const handleAllCourses = () => {
+    stopSpeaking();
     navigate('/courses');
   };
 
   const speakCourseDetails = () => {
+    stopSpeaking();
     if (!course) return;
 
     const title = bengaliActive && course.subject !== "English" ? course["title-bn"] : course.title;
@@ -79,14 +108,7 @@ const CourseDetailsPage = () => {
     const textToSpeak = `${title}. ${description}`;
     const voice = bengaliActive ? "Bangla India Female" : "US English Female";
 
-    if (isSpeaking) {
-      if (window.responsiveVoice && window.responsiveVoice.isPlaying()) {
-        window.responsiveVoice.cancel();
-      } else if ("speechSynthesis" in window) {
-        window.speechSynthesis.cancel();
-      }
-      setIsSpeaking(false);
-    } else {
+    if (!isSpeaking) {
       if (window.responsiveVoice) {
         window.responsiveVoice.speak(textToSpeak, voice, { onend: () => setIsSpeaking(false) });
       } else if ("speechSynthesis" in window) {

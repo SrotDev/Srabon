@@ -15,6 +15,15 @@ const CourseArticlePage = () => {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const navigate = useNavigate();
 
+  const stopSpeaking = () => {
+    if (window.responsiveVoice && window.responsiveVoice.isPlaying()) {
+      window.responsiveVoice.cancel();
+    } else if ("speechSynthesis" in window) {
+      window.speechSynthesis.cancel();
+    }
+    setIsSpeaking(false);
+  };
+
   useEffect(() => {
     if (!course || !course.article) return;
     const htmlContent = bengaliActive && course.subject !== "English"
@@ -23,28 +32,41 @@ const CourseArticlePage = () => {
     setArticleHtml(htmlContent);
   }, [course, bengaliActive]);
 
+  // Stop speaking when bengaliActive changes
+  useEffect(() => {
+    stopSpeaking();
+  }, [bengaliActive]);
+
+  // Stop speaking on location change
+  useEffect(() => {
+    stopSpeaking();
+  }, [location]);
+
+  // Stop speaking when component unmounts (leaving page)
+  useEffect(() => {
+    return () => {
+      stopSpeaking();
+    };
+  }, []);
+
   if (!course) {
     return <div className="loading">{translations[lang].load_article}</div>;
   }
 
   const handleSeeFlashcards = () => {
+    stopSpeaking();
     navigate(`/flashcards/${name}`, { state: { course } });
   };
 
   const speakArticle = () => {
+    stopSpeaking();
+
     const title = bengaliActive && course.subject !== "English" ? course["title-bn"] : course.title;
     const contentText = document.querySelector('.article-text')?.innerText || '';
     const textToSpeak = `${title}. ${contentText}`;
     const voice = bengaliActive ? "Bangla India Female" : "US English Female";
 
-    if (isSpeaking) {
-      if (window.responsiveVoice && window.responsiveVoice.isPlaying()) {
-        window.responsiveVoice.cancel();
-      } else if ("speechSynthesis" in window) {
-        window.speechSynthesis.cancel();
-      }
-      setIsSpeaking(false);
-    } else {
+    if (!isSpeaking) {
       if (window.responsiveVoice) {
         window.responsiveVoice.speak(textToSpeak, voice, { onend: () => setIsSpeaking(false) });
       } else if ("speechSynthesis" in window) {
@@ -60,7 +82,7 @@ const CourseArticlePage = () => {
   return (
     <div className="course-article-page">
       <div className="article-header">
-        <h1>{course.title}</h1>
+        <h1>{bengaliActive && course.subject !== "English" ? course["title-bn"] : course.title}</h1>
         <div className="meta-row">
           <span className="class-box">Class: {localStorage.getItem('class')}</span>
           <div className="subject-sound">

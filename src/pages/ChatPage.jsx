@@ -46,6 +46,10 @@ const ChatPage = () => {
     setUserMessage("");
     setIsSending(true);
 
+    // Show temporary "AI is typing..." message
+    const typingMessage = { from: "ai", text: translations[lang].ai_type };
+    setChatHistory((prev) => [...prev, typingMessage]);
+
     try {
       // Include limit: "false" only for the first request after reload/bengaliActive change
       const requestBody = firstRequest
@@ -62,11 +66,15 @@ const ChatPage = () => {
       });
 
       const data = await response.json();
-      const aiMessage = { from: "ai", text: data.message };
-      setChatHistory((prev) => [...prev, aiMessage]);
+
+      // Replace the typing message with the actual AI response
+      setChatHistory((prev) => [
+        ...prev.slice(0, -1), // remove typing message
+        { from: "ai", text: data.message },
+      ]);
 
       if (speakIt) {
-        speakAIResponse(aiMessage.text);
+        speakAIResponse(data.message);
       }
     } catch (error) {
       console.error("❌ Error:", error);

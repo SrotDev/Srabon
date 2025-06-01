@@ -50,6 +50,7 @@ const translations = {
     // Navbar
     "nav_home": "Home",
     "nav_courses": "Courses",
+    "nav_leaderboard": "Leaderboard",
     "nav_chat": "Chat",
     "nav_logout": "Logout",
     "nav_toast":"You need to login first.",
@@ -157,6 +158,7 @@ const translations = {
 
     "nav_home": "হোম",
     "nav_courses": "কোর্সসমূহ",
+    "nav_leaderboard": "লিডারবোর্ড",
     "nav_chat": "চ্যাট",
     "nav_logout": "লগআউট",
     "nav_toast": "তোমাকে প্রথমে লগইন করতে হবে",

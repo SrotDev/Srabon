@@ -1,184 +1,100 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import { marked } from "marked";
-import { LanguageContext } from "../LanguageContext";
-import translations from "../translations.jsx";
-import { FaMicrophone, FaPaperPlane } from "react-icons/fa";
+import React, { useState, useContext } from 'react';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { LanguageContext } from '../LanguageContext';
+import translations from '../translations.jsx';
 
-const ChatPage = () => {
+const QuizPage = () => {
   const { bengaliActive } = useContext(LanguageContext);
-  const lang = bengaliActive ? "bn" : "en";
-  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+  const lang = bengaliActive ? 'bn' : 'en';
+  const { name } = useParams();
+  const location = useLocation();
+  const course = location.state?.course;
   const navigate = useNavigate();
+  const [selectedAnswers, setSelectedAnswers] = useState(new Array(6).fill(null));
 
-  const [userMessage, setUserMessage] = useState("");
-  const [chatHistory, setChatHistory] = useState([]);
-  const [isSending, setIsSending] = useState(false);
-  const [isListening, setIsListening] = useState(false);
+  if (!course) {
+    return <div className="loading">{translations[lang].load_quiz}</div>;
+  }
 
-  const chatEndRef = useRef(null);
+  // 🟩 Use Bengali questions if conditions met
+  const questions =
+    bengaliActive && course.subject !== "English"
+      ? course["questions-bn"]
+      : course.questions;
 
-  const handleMessageChange = (e) => setUserMessage(e.target.value);
-
-  const stopSpeaking = () => {
-    if (window.responsiveVoice && window.responsiveVoice.isPlaying()) {
-      window.responsiveVoice.cancel();
-    } else if ("speechSynthesis" in window) {
-      window.speechSynthesis.cancel();
-    }
+  const handleAnswerChange = (questionIndex, answerIndex) => {
+    const updatedAnswers = [...selectedAnswers];
+    updatedAnswers[questionIndex] = answerIndex;
+    setSelectedAnswers(updatedAnswers);
   };
 
-  const handleSendMessage = async (text, speakIt = false) => {
-    if (!text.trim() || isSending) return;
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const total = questions.length;
+    let score = 0;
 
-    stopSpeaking();
+    selectedAnswers.forEach((answerIndex, index) => {
+      if (answerIndex !== null) {
+        const selectedValue = questions[index][['option1', 'option2', 'option3', 'option4'][answerIndex]];
+        const correctAnswer = questions[index].ans;
 
-    const newMessage = { from: "user", text };
-    setChatHistory((prev) => [...prev, newMessage]);
-    setUserMessage("");
-    setIsSending(true);
+        if (selectedValue.trim().toLowerCase() === correctAnswer.trim().toLowerCase()) {
+          score += 1;
+        }
 
-    try {
-      const response = await fetch(`${apiBaseUrl}/chats/`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        body: JSON.stringify({ message: text }),
-      });
-
-      const data = await response.json();
-      const aiMessage = { from: "ai", text: data.message };
-      setChatHistory((prev) => [...prev, aiMessage]);
-
-      if (speakIt) {
-        speakAIResponse(aiMessage.text);
+        console.log({
+          answerIndex,
+          selectedValue,
+          correctAnswer,
+          matched: selectedValue.trim().toLowerCase() === correctAnswer.trim().toLowerCase()
+        });
       }
-    } catch (error) {
-      console.error("❌ Error:", error);
-    } finally {
-      setIsSending(false);
-    }
+    });
+
+    toast.success(`${translations[lang].your_score}${score}/${total}!`);
+    navigate('/courses');
   };
 
-  const speakAIResponse = (text) => {
-    if (!text.trim()) return;
-
-    const voice = bengaliActive ? "Bangla India Female" : "US English Female";
-
-    // First try ResponsiveVoice (already loaded in index.html)
-    if (window.responsiveVoice) {
-      window.responsiveVoice.speak(text, voice);
-    } else if ("speechSynthesis" in window) {
-      // Fallback to native API
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = bengaliActive ? "bn-IN" : "en-US";
-      window.speechSynthesis.speak(utterance);
-    } else {
-      console.error("No speech synthesis available.");
-    }
-  };
-
-  const startListening = () => {
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SpeechRecognition) {
-      alert("SpeechRecognition not supported!");
-      return;
-    }
-
-    const recognition = new SpeechRecognition();
-    recognition.lang = bengaliActive ? "bn-BD" : "en-US";
-    recognition.interimResults = false;
-
-    recognition.onstart = () => setIsListening(true);
-    recognition.onresult = (event) => {
-      const transcript = event.results[0][0].transcript;
-      setIsListening(false);
-      handleSendMessage(transcript, true);
-    };
-    recognition.onerror = (e) => {
-      console.error(e);
-      setIsListening(false);
-    };
-    recognition.onend = () => setIsListening(false);
-    recognition.start();
-  };
-
-  const handleSubmit = () => handleSendMessage(userMessage);
-
-  useEffect(() => {
-    const name = localStorage.getItem("name") || "there";
-    const welcomeMessage = {
-      from: "ai",
-      text: `${translations[lang].greeting_title}${name}! ${translations[lang].chat_start}`,
-    };
-    setChatHistory([welcomeMessage]);
-  }, [bengaliActive]);
-
-  useEffect(() => {
-    if (chatEndRef.current) {
-      chatEndRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [chatHistory]);
+  const courseTitle =
+    bengaliActive && course.subject !== "English"
+      ? course["title-bn"]
+      : course.title;
 
   return (
-    <div className="chat-page">
-      <div className="chat-container">
-        <div className="chat-header">
-          <button onClick={() => navigate("/functionalities")} className="back-button">
-            ← Back
-          </button>
-          <h2>{translations[lang].chat_head}</h2>
-        </div>
-
-        <div className="chat-history">
-          {chatHistory.map((msg, index) => (
-            <div key={index} className={`chat-message ${msg.from}`}>
-              <div
-                className="markdown-message"
-                dangerouslySetInnerHTML={{ __html: marked(msg.text) }}
-              />
-            </div>
-          ))}
-          {isListening && (
-            <div className="chat-message listening-indicator">
-              <div className="markdown-message">
-                <FaMicrophone /> {translations[lang].listening}
-              </div>
-            </div>
-          )}
-          <div ref={chatEndRef} />
-        </div>
-
-        <div className="chat-input">
-          <textarea
-            placeholder={translations[lang].new_msg}
-            value={userMessage}
-            onChange={handleMessageChange}
-            disabled={isSending}
-          />
-          <div className="input-buttons">
-            <button
-              onClick={startListening}
-              className="voice-button"
-              disabled={isSending}
-              title="Voice Input"
-            >
-              <FaMicrophone />
-            </button>
-            <button
-              onClick={handleSubmit}
-              className="send-button"
-              disabled={isSending || !userMessage.trim()}
-            >
-              <FaPaperPlane />
-            </button>
-          </div>
+    <div className="quiz-form-page">
+      <div className="quiz-form-header">
+        <h1>{courseTitle}{translations[lang].quiz_end}</h1>
+        <div className="class-meta">
+          <span className="class-box">Class: {localStorage.getItem('class')}</span>
+          <span className="subject-box">{course.subject}</span>
         </div>
       </div>
+
+      <form className="quiz-form" onSubmit={handleSubmit}>
+        {questions.map((q, qIndex) => (
+          <div key={qIndex} className="quiz-question">
+            <h3>Q{qIndex + 1}: {q.question}</h3>
+            <div className="options">
+              {['option1', 'option2', 'option3', 'option4'].map((key, index) => (
+                <label key={index} className="option-label">
+                  <input
+                    type="radio"
+                    name={`question-${qIndex}`}
+                    value={index}
+                    checked={selectedAnswers[qIndex] === index}
+                    onChange={() => handleAnswerChange(qIndex, index)}
+                  />
+                  {q[key]}
+                </label>
+              ))}
+            </div>
+          </div>
+        ))}
+        <button type="submit" className="submit-quiz-btn">{translations[lang].submit_quiz}</button>
+      </form>
     </div>
   );
 };
 
-export default ChatPage;
+export default QuizPage;

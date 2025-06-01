@@ -42,18 +42,19 @@ const QuizPage = () => {
         if (selectedValue.trim().toLowerCase() === correctAnswer.trim().toLowerCase()) {
           score += 1;
         }
-
-        console.log({
-          answerIndex,
-          selectedValue,
-          correctAnswer,
-          matched: selectedValue.trim().toLowerCase() === correctAnswer.trim().toLowerCase()
-        });
       }
     });
 
     toast.success(`${translations[lang].your_score}${score}/${total}!`);
-    navigate('/courses');
+
+    // Navigate to quiz solution page with data
+    navigate(`/quizSolution/${name}`, {
+      state: {
+        course,
+        selectedAnswers,
+        score
+      }
+    });
   };
 
   const courseTitle =
