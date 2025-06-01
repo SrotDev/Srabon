@@ -17,7 +17,7 @@
 
       h1 {
         font-size: 2rem;
-        color: #1a73e8;
+        color: #333;
         margin-bottom: 0.5rem;
       }
 
@@ -114,8 +114,12 @@
     .qs-footer {
       text-align: center;
       margin-top: 2rem;
+      display: flex;
+      justify-content: center;
+      gap: 1rem; // 🟦 add some space between buttons
 
-      .qs-all-courses-btn {
+      .qs-all-courses-btn,
+      .qs-leaderboard-btn {
         background: #1a73e8;
         color: #fff;
         border: none;
@@ -127,6 +131,13 @@
 
         &:hover {
           background: #155ab6;
+        }
+      }
+
+      .qs-leaderboard-btn {
+        background: #28a745; // 🟩 different color for leaderboard
+        &:hover {
+          background: #1c7b3a;
         }
       }
     }
