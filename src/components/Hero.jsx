@@ -18,7 +18,7 @@ const Hero = () => {
             <NavLink to="/auth">
               <button className="btn btn--primary">{translations[lang].hero_btn_start}</button>
             </NavLink>
-            <NavLink to="https://www.facebook.com/srot.dev" target='_blank'>
+            <NavLink to="https://github.com/SrotDev/Srabon" target='_blank'>
               <button className="btn btn--secondary">{translations[lang].hero_btn_learn}</button>
             </NavLink>
           </div>
