@@ -12,7 +12,7 @@ const CourseDetailsPage = () => {
   const UNSPLASH_ACCESS_KEY = import.meta.env.VITE_UNSPLASH_ACCESS;
   const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
   const location = useLocation();
-  const { name } = location.state || {};
+  const { courseID } = location.state || {};
   const [course, setCourse] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
   const navigate = useNavigate();
@@ -29,11 +29,11 @@ const CourseDetailsPage = () => {
   };
 
   useEffect(() => {
-    if (!name) return;
+    if (!courseID) return;
 
     const fetchCourseData = async () => {
       try {
-        const res = await fetch(`${apiBaseUrl}/courses/${name}/`, {
+        const res = await fetch(`${apiBaseUrl}/courses/${courseID}/`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -71,7 +71,7 @@ const CourseDetailsPage = () => {
     };
 
     fetchCourseData();
-  }, [name]);
+  }, [courseID]);
 
   // Stop speaking when bengaliActive changes
   useEffect(() => {
@@ -116,7 +116,7 @@ const CourseDetailsPage = () => {
       toast.error('Error updating score');
     }
 
-    navigate(`/courseArticle/${name}`, { state: { course } });
+    navigate(`/courseArticle/${courseID}`, { state: { course } });
   };
 
   const handleAllCourses = () => {

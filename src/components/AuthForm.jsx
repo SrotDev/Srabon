@@ -91,7 +91,7 @@ const AuthForm = () => {
         >
           { translations[lang].login }
         </button>
-        <span>|</span>
+        <span className="removable">|</span>
         <button
           className={!isLogin ? "active" : ""}
           onClick={() => setIsLogin(false)}

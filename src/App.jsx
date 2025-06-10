@@ -32,19 +32,19 @@ const App = () => {
         <Route path="create-course" element={<CreateCoursePage />} />
         <Route path="chats" element={<ChatPage />} />
         <Route
-          path="courses/:name"
+          path="courses/:courseID"
           element={<CourseDetailsPage setCourse={setCourse} />}
         />
         <Route
-          path="courseArticle/:name"
+          path="courseArticle/:courseID"
           element={<CourseArticlePage course={course} />}
         />
         <Route
-          path="flashcards/:name"
+          path="flashcards/:courseID"
           element={<FlashcardsPage course={course} />}
         />
-        <Route path="quiz/:name" element={<QuizPage />} />
-        <Route path="quizSolution/:name" element={<QuizSolutionPage />} />
+        <Route path="quiz/:courseID" element={<QuizPage />} />
+        <Route path="quizSolution/:courseID" element={<QuizSolutionPage />} />
         <Route path="functionalities" element={<FunctionalitiesPage />} />
         <Route path="leaderboard" element={<Leaderboard />} />
         <Route path="*" element={<NotFoundPage />} />

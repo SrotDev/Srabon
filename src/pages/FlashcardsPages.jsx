@@ -7,7 +7,7 @@ import translations from '../translations.jsx';
 const FlashcardsPage = () => {
   const { bengaliActive } = useContext(LanguageContext);
   const lang = bengaliActive ? 'bn' : 'en';
-  const { name } = useParams();
+  const { courseID } = useParams();
   const location = useLocation();
   const course = location.state?.course;
 
@@ -72,7 +72,7 @@ const FlashcardsPage = () => {
   };
 
   const nextQuiz = () => {
-    navigate(`/quiz/${name}`, { state: { course } });
+    navigate(`/quiz/${courseID}`, { state: { course } });
   };
 
   return (

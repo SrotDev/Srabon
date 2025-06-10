@@ -10,7 +10,7 @@ const CourseArticlePage = () => {
   const { bengaliActive } = useContext(LanguageContext);
   const lang = bengaliActive ? 'bn' : 'en';
   const location = useLocation();
-  const { name } = useParams();
+  const { courseID } = useParams();
   const course = location.state?.course;
   const [articleHtml, setArticleHtml] = useState('');
   const [isSpeaking, setIsSpeaking] = useState(false);
@@ -77,7 +77,7 @@ const CourseArticlePage = () => {
       toast.error('Error updating score');
     }
 
-    navigate(`/flashcards/${name}`, { state: { course } });
+    navigate(`/flashcards/${courseID}`, { state: { course } });
   };
 
   const speakArticle = () => {

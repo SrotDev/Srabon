@@ -1,17 +1,18 @@
-import React, { useContext } from 'react';
-import { NavLink, useLocation, useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import logo from '../assets/images/logo.png';
-import { LanguageContext } from '../LanguageContext';
-import translations from '../translations.jsx';
+import React, { useContext } from "react";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import logo from "../assets/images/logo.png";
+import { LanguageContext } from "../LanguageContext";
+import translations from "../translations.jsx";
 
 const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const isIndexPage = ((location.pathname === "/") || (location.pathname === "/auth"));
+  const isIndexPage =
+    location.pathname === "/" || location.pathname === "/auth";
 
   const { bengaliActive, toggleLanguage } = useContext(LanguageContext);
-  const lang = bengaliActive ? 'bn' : 'en';
+  const lang = bengaliActive ? "bn" : "en";
 
   const handleProtectedClick = (e) => {
     if (isIndexPage) {
@@ -28,21 +29,50 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="navbar__container">
-        <div className="navbar__logo">
-          <NavLink to="/"><img src={logo} alt="Srabon Logo" style={{ height: '50px' }} /></NavLink>
+        <div
+          className="navbar__logo"
+          onClick={() => navigate(isIndexPage ? "/" : "/functionalities")}
+          style={{ cursor: "pointer" }}
+        >
+          <img src={logo} alt="Srabon Logo" style={{ height: "50px" }} />
         </div>
+
         <ul className="navbar__links">
-          <li><NavLink to="/functionalities" onClick={handleProtectedClick}>{translations[lang].nav_home}</NavLink></li>
-          <li><NavLink to="/courses" onClick={handleProtectedClick}>{translations[lang].nav_courses}</NavLink></li>
-          <li><NavLink to="/leaderboard" onClick={handleProtectedClick}>{translations[lang].nav_leaderboard}</NavLink></li>
-          <li><NavLink to="/chats" onClick={handleProtectedClick}>{translations[lang].nav_chat}</NavLink></li>
+          <li>
+            <NavLink to="/functionalities" onClick={handleProtectedClick}>
+              {translations[lang].nav_home}
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/courses" onClick={handleProtectedClick}>
+              {translations[lang].nav_courses}
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/leaderboard" onClick={handleProtectedClick}>
+              {translations[lang].nav_leaderboard}
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/chats" onClick={handleProtectedClick}>
+              {translations[lang].nav_chat}
+            </NavLink>
+          </li>
           {!isIndexPage && (
-            <li><button className="logout-btn" onClick={handleLogout}>{translations[lang].nav_logout}</button></li>
+            <li>
+              <button className="logout-btn" onClick={handleLogout}>
+                {translations[lang].nav_logout}
+              </button>
+            </li>
           )}
           <li className="lang-switcher">
             <span>EN</span>
             <label className="toggle-lang-switch">
-              <input type="checkbox" checked={bengaliActive} onChange={toggleLanguage} />
+              <input
+                type="checkbox"
+                checked={bengaliActive}
+                onChange={toggleLanguage}
+              />
               <span className="slider"></span>
             </label>
             <span>BN</span>

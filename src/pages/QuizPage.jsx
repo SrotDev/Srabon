@@ -7,7 +7,7 @@ import translations from '../translations.jsx';
 const QuizPage = () => {
   const { bengaliActive } = useContext(LanguageContext);
   const lang = bengaliActive ? 'bn' : 'en';
-  const { name } = useParams();
+  const { courseID } = useParams();
   const location = useLocation();
   const course = location.state?.course;
   const navigate = useNavigate();
@@ -74,7 +74,7 @@ const QuizPage = () => {
     }
 
     // 3️⃣ Navigate to quiz solution page
-    navigate(`/quizSolution/${name}`, {
+    navigate(`/quizSolution/${courseID}`, {
       state: {
         course,
         selectedAnswers,
