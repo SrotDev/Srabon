@@ -99,48 +99,6 @@
   }
 }
 
-// Navbar
-
-
-// Navbar
-@media (max-width: 600px) {
-  .navbar {
-    padding: 1rem;
-
-    &__container {
-      flex-direction: column;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    img {
-      height: 40px;
-    }
-
-    &__links {
-      flex-direction: row;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1.5rem;
-      font-size: 1rem;
-
-      li {
-        display: flex;
-        align-items: center;
-
-        a {
-          font-size: 0.95rem;
-        }
-
-        .logout-btn {
-          font-size: 14px;
-          padding: 6px 16px;
-        }
-      }
-    }
-  }
-}
-
 
 
 

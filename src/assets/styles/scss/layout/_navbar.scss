@@ -149,24 +149,11 @@
     }
 
     @media (max-width: 600px) {
-      display: none;
       flex-direction: column;
-      top: 0;
 
       li {
         width: 100%;
-        text-align: center;
         justify-content: center;
-        align-items: center;
-      }
-
-      &.active {
-        display: flex;
-        transform: translateX(0); /* Slide in the sidebar from the right */
-      }
-
-      &.inactive {
-        transform: translateX(100%); /* Hide sidebar */
       }
     }
   }

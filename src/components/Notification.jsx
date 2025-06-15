@@ -163,9 +163,7 @@ const Notification = ({ setShowNotifications, setIsActive }) => {
       </div>
 
       <div className="notifications-list">
-        {loading ? (
-          <p>Loading notifications...</p>
-        ) : (
+        {loading ? (<p></p>): (
           notifications.map((notification) => (
             <div
               key={notification.id}

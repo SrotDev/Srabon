@@ -12105,22 +12105,11 @@ a:hover {
 }
 @media (max-width: 600px) {
   .navbar__links {
-    display: none;
     flex-direction: column;
-    top: 0;
   }
   .navbar__links li {
     width: 100%;
-    text-align: center;
     justify-content: center;
-    align-items: center;
-  }
-  .navbar__links.active {
-    display: flex;
-    transform: translateX(0); /* Slide in the sidebar from the right */
-  }
-  .navbar__links.inactive {
-    transform: translateX(100%); /* Hide sidebar */
   }
 }
 .navbar .navbar__hamburger {
@@ -13993,37 +13982,6 @@ a:hover {
 @media (max-width: 900px) {
   .layout-wrapper {
     background-position: top center;
-  }
-}
-@media (max-width: 600px) {
-  .navbar {
-    padding: 1rem;
-  }
-  .navbar__container {
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-  }
-  .navbar img {
-    height: 40px;
-  }
-  .navbar__links {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1.5rem;
-    font-size: 1rem;
-  }
-  .navbar__links li {
-    display: flex;
-    align-items: center;
-  }
-  .navbar__links li a {
-    font-size: 0.95rem;
-  }
-  .navbar__links li .logout-btn {
-    font-size: 14px;
-    padding: 6px 16px;
   }
 }
 @media (max-width: 900px) {
