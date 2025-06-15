@@ -5,6 +5,30 @@ import ClipLoader from "react-spinners/ClipLoader";
 import { LanguageContext } from "../LanguageContext";
 import translations from "../translations.jsx";
 
+// Create notification function
+const createNotification = async (message) => {
+  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    console.error("No token found. Unable to create notification.");
+    return;
+  }
+
+  try {
+    await fetch(`${apiBaseUrl}/notifications/make/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`, // Use token for authentication
+      },
+      body: JSON.stringify({ message }),
+    });
+  } catch (error) {
+    console.error("Failed to create notification:", error);
+  }
+};
+
 const CreateCoursePage = () => {
   const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
   const { bengaliActive } = useContext(LanguageContext);
@@ -47,7 +71,11 @@ const CreateCoursePage = () => {
         throw new Error(translations[lang].course_failed);
       }
 
-      toast.success(translations[lang].course_success);
+      const notificationMessage = translations[lang].course_success;
+      toast.success(notificationMessage);
+      
+      // Create the notification with the success message
+      createNotification(notificationMessage);
 
       // 2. Fetch student info
       const studentRes = await fetch(`${apiBaseUrl}/studentinfo/`, {
@@ -78,6 +106,7 @@ const CreateCoursePage = () => {
           throw new Error(translations[lang].something_wrong);
         }
       }
+
 
       // Navigate after slight delay
       setTimeout(() => {

@@ -1,31 +1,24 @@
 // load Bootstrap SCSS
 @use "../../../../node_modules/bootstrap/scss/bootstrap";
 
-
 // Load your global styles
 @use 'global/reset';
 @use 'global/typography';
 @use 'global/others';
-
-
 // Load layout styles
 @use 'layout/mainLayout';
 @use 'layout/navbar';
+@use 'layout/notification';
 @use 'layout/footer';
-
-
 // Load component styles
 @use 'components/hero';
 @use 'components/authForm';
 @use 'components/courseCard';
 @use 'components/spinner';
-
-
 // pages
 @use 'pages/loginSignup.scss';
 @use 'pages/studentJourney';
 @use 'pages/courses';
-@use 'pages/ExplorePage';
 @use 'pages/courseDetails';
 @use 'pages/functionalities';
 @use 'pages/notFound';
@@ -34,8 +27,8 @@
 @use 'pages/quiz';
 @use 'pages/createCourse';
 @use 'pages/chatPage';
-
-
+@use 'pages/quizSolution';
+@use 'pages/leaderboard';
 // Load responsive styles
 @use 'responsive/tablet';
 @use 'responsive/mobile';

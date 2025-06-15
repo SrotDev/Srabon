@@ -1,5 +1,5 @@
 .layout-wrapper {
-  background-image: url("/assets/images/home.jpg"); // ✅ works with Vite
+  background-image: url("assets/images/home.jpg"); // ✅ works with Vite
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

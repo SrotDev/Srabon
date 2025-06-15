@@ -1,30 +1,37 @@
-// authForm
+// All tablet styles are scoped under .tablet-wrapper to avoid global conflicts
+
+// Auth Form
 @media (max-width: 900px) {
   .auth-form-wrapper {
     padding: 2rem;
     max-width: 95%;
     gap: 1.2rem;
 
-    .auth-toggle button {
-      font-size: 1rem;
+    .auth-toggle {
+      button {
+        font-size: 1rem;
+      }
     }
 
-    .auth-footer h2 {
-      font-size: 1.3rem;
+    .auth-footer {
+      h2 {
+        font-size: 1.3rem;
+      }
     }
 
     .auth-btn {
       font-size: 1rem;
     }
 
-    .auth-input input {
-      font-size: 1rem;
+    .auth-input {
+      input {
+        font-size: 1rem;
+      }
     }
   }
 }
 
-
-// hero
+// Hero Section
 @media (max-width: 900px) {
   .hero {
     &__container {
@@ -61,39 +68,23 @@
   }
 }
 
-
-//typography
+// Typography
 @media (max-width: 900px) {
-  h1 {
-    font-size: 2.2rem;
-  }
-
-  h2 {
-    font-size: 1.8rem;
-  }
-
-  h3 {
-    font-size: 1.5rem;
-  }
-
-  p {
-    font-size: 1rem;
+  .typography {
+    h1 { font-size: 2.2rem; }
+    h2 { font-size: 1.8rem; }
+    h3 { font-size: 1.5rem; }
+    p  { font-size: 1rem; }
   }
 }
 
-//others
+// Utility Classes
 @media (max-width: 900px) {
-  .p-2 {
-    padding: 1.5rem;
-  }
-
-  .m-1 {
-    margin: 0.8rem;
-  }
+  .p-2 { padding: 1.5rem; }
+  .m-1 { margin: 0.8rem; }
 }
 
-
-//footer
+// Footer
 @media (max-width: 900px) {
   .site-footer {
     font-size: 13.5px;
@@ -101,19 +92,20 @@
   }
 }
 
-
-// mainLayout
+// Main Layout
 @media (max-width: 900px) {
   .layout-wrapper {
     background-position: top center;
   }
 }
 
+// Navbar
 
-// tablet
-@media (max-width: 900px) {
+
+// Navbar
+@media (max-width: 600px) {
   .navbar {
-    padding: 1.2rem;
+    padding: 1rem;
 
     &__container {
       flex-direction: column;
@@ -121,27 +113,38 @@
       gap: 1rem;
     }
 
+    img {
+      height: 40px;
+    }
+
     &__links {
       flex-direction: row;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 2rem;
+      gap: 1.5rem;
       font-size: 1rem;
 
-      li .logout-btn {
-        font-size: 15px;
-        padding: 6px 18px;
-      }
-    }
+      li {
+        display: flex;
+        align-items: center;
 
-    img {
-      height: 45px;
+        a {
+          font-size: 0.95rem;
+        }
+
+        .logout-btn {
+          font-size: 14px;
+          padding: 6px 16px;
+        }
+      }
     }
   }
 }
 
 
-// chatPage
+
+
+// Chat Page
 @media (max-width: 900px) {
   .chat-container {
     width: 90%;
@@ -176,115 +179,85 @@
 }
 
 
-// courseDetails
+// Course Details
 @media (max-width: 900px) {
   .course-details {
     padding: 25px;
     margin: 40px 25px;
-  }
 
-  .details-header h1 {
-    font-size: 30px;
-  }
+    .details-header h1 { font-size: 30px; }
 
-  .course-meta {
-    flex-wrap: wrap;
-    gap: 12px;
+    .course-meta {
+      flex-wrap: wrap;
+      gap: 12px;
 
-    .share-btn {
-      padding: 6px 12px;
-      font-size: 15px;
+      .share-btn {
+        padding: 6px 12px;
+        font-size: 15px;
+      }
     }
-  }
 
-  .course-content .description {
-    font-size: 17px;
+    .course-content .description {
+      font-size: 17px;
 
-    img.course-image {
-      float: right;
-      width: 45%;
-      max-width: 45%;
-      margin-left: 16px;
-      margin-bottom: 10px;
+      img.course-image {
+        float: right;
+        width: 45%;
+        max-width: 45%;
+        margin-left: 16px;
+        margin-bottom: 10px;
+      }
     }
-  }
 
-  .buttons {
-    flex-direction: row;
-    gap: 10px;
-  }
+    .buttons {
+      flex-direction: row;
+      gap: 10px;
+    }
 
-  .enroll-btn,
-  .all-courses-btn {
-    font-size: 16.5px;
-    padding: 14px 24px;
+    .enroll-btn,
+    .all-courses-btn {
+      font-size: 16.5px;
+      padding: 14px 24px;
+    }
   }
 }
 
-
-//courseArticle
+// Course Article
 @media (max-width: 900px) {
   .course-article-page {
     padding: 30px;
     margin: 40px 20px;
-  }
 
-  .article-header h1 {
-    font-size: 30px;
-  }
-
-  .class-box, .subject-box {
-    font-size: 17px;
-  }
-
-  .article-content h2 {
-    font-size: 22px;
-  }
-
-  .article-text {
-    font-size: 17px;
-  }
-
-  .prev-btn,
-  .next-btn,
-  .flashcards-btn button {
-    font-size: 17px;
-    padding: 12px 24px;
+    .article-header h1 { font-size: 30px; }
+    .class-box, .subject-box { font-size: 17px; }
+    .article-content h2 { font-size: 22px; }
+    .article-text { font-size: 17px; }
+    .prev-btn,
+    .next-btn,
+    .flashcards-btn button {
+      font-size: 17px;
+      padding: 12px 24px;
+    }
   }
 }
 
-
-//courses
+// Courses Page
 @media (max-width: 900px) {
   .courses-page {
-    padding: 2.5rem 1.5rem;
+    padding: 2rem 1.5rem;
 
-    .header {
-      h1 {
-        font-size: 1.75rem;
-      }
-
-      p {
-        font-size: 1.05rem;
-      }
+    .course-grid {
+      grid-template-columns: repeat(2, 1fr);
     }
 
-    .course-slider {
-      gap: 0.75rem;
-
-      .nav-btn {
-        width: 38px;
-        height: 38px;
-      }
-
-      .course-cards {
-        gap: 1.2rem;
-      }
+    .header {
+      h1 { font-size: 1.75rem; }
+      p  { font-size: 1.05rem; }
     }
   }
 }
 
-//createCourse
+// Create Course
 @media (max-width: 900px) {
   .create-course-page {
     padding: 40px 30px;
@@ -292,74 +265,40 @@
     .create-course-form {
       padding: 30px;
 
-      h2 {
-        font-size: 22px;
-      }
+      h2 { font-size: 22px; }
 
-      .form-field {
-        input {
-          font-size: 15.5px;
-        }
-      }
+      .form-field input { font-size: 15.5px; }
 
-      .form-actions {
-        .generate-btn {
-          font-size: 17px;
-        }
-      }
+      .form-actions .generate-btn { font-size: 17px; }
     }
   }
 }
 
-//explore
+// Explore Page
 @media (max-width: 900px) {
   .explore-page {
-    .explore-container {
-      width: 90%;
-    }
-
-    .explore-title {
-      font-size: 2.1rem;
-    }
-
-    .explore-grid {
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    }
+    .explore-container { width: 90%; }
+    .explore-title { font-size: 2.1rem; }
+    .explore-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
   }
 }
 
-// flashcards
+// Flashcards
 @media (max-width: 900px) {
   .flashcards-page {
     padding: 30px;
     margin: 40px auto;
-  }
 
-  .flashcards-header h1 {
-    font-size: 28px;
-  }
-
-  .flashcard {
-    width: 100%;
-    padding: 30px;
-  }
-
-  .flashcard-text {
-    font-size: 19px;
-  }
-
-  .flashcard-navigation {
-    .prev-btn, .next-btn {
-      font-size: 17px;
-    }
-  }
-
-  .start-quiz-btn button {
-    font-size: 17px;
+    .flashcards-header h1 { font-size: 28px; }
+    .flashcard { width: 100%; padding: 30px; }
+    .flashcard-text { font-size: 19px; }
+    .flashcard-navigation .prev-btn,
+    .flashcard-navigation .next-btn { font-size: 17px; }
+    .start-quiz-btn button { font-size: 17px; }
   }
 }
 
-//loginSignup
+// Login Signup
 @media (max-width: 900px) {
   .login-signup-page {
     flex-direction: column;
@@ -380,82 +319,58 @@
   }
 }
 
-//functionalities.scss
+// Functionalities
 @media (max-width: 1024px) {
   .functionalities {
     .main-content {
       flex-direction: column;
 
       .left-panel,
-      .right-panel {
-        width: 100%;
-      }
+      .right-panel { width: 100%; }
 
       .greeting-box {
         flex-direction: column;
         text-align: center;
 
-        .bot-image {
-          margin: 0 auto 1rem;
-        }
+        .bot-image { margin: 0 auto 1rem; }
 
         .greeting-text {
-          h2 {
-            font-size: 2.5rem;
-          }
-          p {
-            font-size: 1.2rem;
-          }
+          h2 { font-size: 2.5rem; }
+          p  { font-size: 1.2rem; }
         }
       }
 
       .create-course-card,
       .selected-subjects-card,
-      .ask-ai-card {
-        width: 100%;
-      }
+      .ask-ai-card { width: 100%; }
     }
   }
 }
 
-//notFound
+// Not Found
 @media (max-width: 1024px) {
   .not-found-page {
     .not-found-content {
       padding: 2.5rem 1.5rem;
 
-      h1 {
-        font-size: 1.6rem;
-      }
-
-      p {
-        font-size: 0.95rem;
-      }
+      h1 { font-size: 1.6rem; }
+      p  { font-size: 0.95rem; }
     }
   }
 }
 
-//quiz
+// Quiz
 @media (max-width: 1024px) {
   .quiz-form-page {
     padding: 30px 20px;
   }
 
-  .quiz-form-header h1 {
-    font-size: 28px;
-  }
-
-  .quiz-question h3 {
-    font-size: 18px;
-  }
-
-  .submit-quiz-btn {
-    padding: 10px 24px;
-    font-size: 16px;
-  }
+  .quiz-form-header h1 { font-size: 28px; }
+  .quiz-question h3 { font-size: 18px; }
+  .submit-quiz-btn { padding: 10px 24px; font-size: 16px; }
 }
 
-//StudentJourney
+// Student Journey
 @media (max-width: 1024px) {
   .survey-container {
     padding: 1.5rem;
@@ -468,16 +383,69 @@
     margin-bottom: 1.5rem;
   }
 
-  .survey-step p {
-    font-size: 1.1rem;
-  }
+  .survey-step p { font-size: 1.1rem; }
+  .survey-input { width: 80%; font-size: 1.1rem; }
+  .subject-grid { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
+}
 
-  .survey-input {
-    width: 80%;
-    font-size: 1.1rem;
-  }
+// quiz solution
+@media (max-width: 900px) {
+  .qs-page {
+    padding: 1.5rem;
 
-  .subject-grid {
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    .qs-container {
+      max-width: 90%;
+      min-width: 80%;
+
+      .qs-header {
+        h1 {
+          font-size: 1.8rem;
+        }
+
+        .qs-score-box {
+          font-size: 1rem;
+          padding: 0.6rem 1.2rem;
+        }
+
+        .qs-class-meta {
+          flex-direction: column;
+          align-items: center;
+          gap: 0.5rem;
+        }
+      }
+
+      .qs-content {
+        gap: 1.5rem;
+
+        .qs-question {
+          h3 {
+            font-size: 1rem;
+          }
+
+          .qs-options {
+            grid-template-columns: 1fr;
+          }
+
+          .qs-explanation {
+            padding: 0.6rem 0.8rem;
+
+            h4 {
+              font-size: 0.95rem;
+            }
+
+            p {
+              font-size: 0.9rem;
+            }
+          }
+        }
+      }
+
+      .qs-footer {
+        .qs-all-courses-btn {
+          font-size: 0.95rem;
+          padding: 0.65rem 1.2rem;
+        }
+      }
+    }
   }
 }

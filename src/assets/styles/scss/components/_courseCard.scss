@@ -20,15 +20,31 @@
   .course-body {
     padding: 1rem;
 
-    .tag {
-      background: #eef6f6;
-      padding: 0.25rem 0.75rem;
-      border-radius: 12px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: #008080;
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
       margin-bottom: 0.5rem;
-      display: inline-block;
+
+      .tagOne {
+        background: #eef6f6;
+        padding: 0.25rem 0.75rem;
+        border-radius: 12px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: #008080;
+        display: inline-block;
+      }
+
+      .tagTwo {
+        background: #f6f9f6;
+        padding: 0.25rem 0.75rem;
+        border-radius: 12px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: #006400;
+        display: inline-block;
+      }
     }
 
     .title {

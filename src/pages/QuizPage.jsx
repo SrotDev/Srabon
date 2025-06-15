@@ -4,6 +4,30 @@ import { toast } from 'react-toastify';
 import { LanguageContext } from '../LanguageContext';
 import translations from '../translations.jsx';
 
+// Create notification function
+const createNotification = async (message) => {
+  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    console.error("No token found. Unable to create notification.");
+    return;
+  }
+
+  try {
+    await fetch(`${apiBaseUrl}/notifications/make/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`, // Use token for authentication
+      },
+      body: JSON.stringify({ message }),
+    });
+  } catch (error) {
+    console.error("Failed to create notification:", error);
+  }
+};
+
 const QuizPage = () => {
   const { bengaliActive } = useContext(LanguageContext);
   const lang = bengaliActive ? 'bn' : 'en';
@@ -47,9 +71,13 @@ const QuizPage = () => {
     });
 
     // 1️⃣ Show score toast
-    toast.success(`${translations[lang].your_score}${score}/${total}!`);
+    const scoreMessage = `${translations[lang].your_score}${score}/${total}!`;
+    toast.success(scoreMessage);
 
-    // 2️⃣ Update the user's total score via API
+    // 2️⃣ Create the notification with the score message
+    createNotification(scoreMessage);
+
+    // 3️⃣ Update the user's total score via API
     try {
       const res = await fetch(`${apiBaseUrl}/score/`, {
         method: 'POST',
@@ -73,7 +101,7 @@ const QuizPage = () => {
       toast.error('Error updating score');
     }
 
-    // 3️⃣ Navigate to quiz solution page
+    // 4️⃣ Navigate to quiz solution page
     navigate(`/quizSolution/${courseID}`, {
       state: {
         course,

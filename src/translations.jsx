@@ -49,7 +49,8 @@ const translations = {
 
     // Navbar
     "nav_home": "Home",
-    "nav_courses": "Courses",
+    "nav_courses": "My courses",
+    "nav_explore": "Explore",
     "nav_leaderboard": "Leaderboard",
     "nav_chat": "Chat",
     "nav_logout": "Logout",
@@ -164,7 +165,8 @@ const translations = {
     "hero_btn_learn": "আরও জানো",
 
     "nav_home": "হোম",
-    "nav_courses": "কোর্সসমূহ",
+    "nav_courses": "আমার কোর্সসমূহ",
+    "nav_explore": "অনুসন্ধান",
     "nav_leaderboard": "লিডারবোর্ড",
     "nav_chat": "চ্যাট",
     "nav_logout": "লগআউট",

@@ -7,7 +7,7 @@ const CourseCard = ({ course }) => {
   const UNSPLASH_ACCESS_KEY = import.meta.env.VITE_UNSPLASH_ACCESS;
   const { bengaliActive } = useContext(LanguageContext);
   const lang = bengaliActive ? 'bn' : 'en';
-  const { courseID, title, subtitle, subject } = course;
+  const { courseID, author_name, title, subtitle, subject } = course;
   const [imageUrl, setImageUrl] = useState(null);
   const navigate = useNavigate();
 
@@ -40,7 +40,10 @@ const CourseCard = ({ course }) => {
     <div className="course-card">
       <img className="course-image" src={imageUrl} alt={subject} />
       <div className="course-body">
-        <span className="tag">{subject}</span>
+        <div className="tags">
+          <span className="tagOne">{subject}</span>
+          <span className="tagTwo">{author_name}</span>
+        </div>
         <h3 className="title">{courseTitle}</h3>
         <p className="desc">{courseSubtitle}</p>
         <button className="start-btn" onClick={() => navigate(`/courses/${courseID}`, { state: { courseID } })}>

@@ -28,6 +28,30 @@ const CourseDetailsPage = () => {
     setIsSpeaking(false);
   };
 
+  // Create notification function
+  const createNotification = async (message) => {
+    const notificationPayload = { message };
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      console.error("No token found. Unable to create notification.");
+      return;
+    }
+
+    try {
+      await fetch(`${apiBaseUrl}/notifications/make/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`, // Use token for authentication
+        },
+        body: JSON.stringify(notificationPayload),
+      });
+    } catch (error) {
+      console.error("Failed to create notification:", error);
+    }
+  };
+
   useEffect(() => {
     if (!courseID) return;
 
@@ -106,7 +130,14 @@ const CourseDetailsPage = () => {
       if (res.ok) {
         const data = await res.json();
         const totalScore = data.score;
-        toast.success(`${translations[lang].toast_score_increased}${totalScore}`);
+        const message = `${translations[lang].toast_score_increased}${totalScore}`;
+
+        // Show the toast message
+        toast.success(message);
+
+        // Create the notification with the same message
+        createNotification(message);
+
       } else {
         console.error('Failed to update score');
         toast.error('Failed to update score');
