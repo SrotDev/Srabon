@@ -4,6 +4,7 @@ import { FaHome } from "react-icons/fa";
 import ClipLoader from "react-spinners/ClipLoader";
 import { LanguageContext } from "../LanguageContext";
 import translations from "../translations";
+import { createPortal } from "react-dom";
 
 const Leaderboard = () => {
   const { bengaliActive } = useContext(LanguageContext);
@@ -47,18 +48,17 @@ const Leaderboard = () => {
   }, [apiBaseUrl]);
 
   if (loading) {
-    return (
+    return createPortal(
       <div className="spinner-container">
         <ClipLoader color="#27d887" loading={true} size={50} />
-      </div>
+      </div>,
+      document.body
     );
   }
 
   return (
     <div className="leaderboard-page">
-      <h1 className="leaderboard-title">
-        {translations[lang].leaderboard}
-      </h1>
+      <h1 className="leaderboard-title">{translations[lang].leaderboard}</h1>
 
       <div className="leaderboard-table">
         <div className="leaderboard-header">

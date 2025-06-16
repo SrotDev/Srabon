@@ -4,6 +4,8 @@ import { toast } from "react-toastify";
 import ClipLoader from "react-spinners/ClipLoader";
 import { LanguageContext } from "../LanguageContext";
 import translations from "../translations.jsx";
+import { createPortal } from "react-dom";
+
 
 // Create notification function
 const createNotification = async (message) => {
@@ -73,7 +75,7 @@ const CreateCoursePage = () => {
 
       const notificationMessage = translations[lang].course_success;
       toast.success(notificationMessage);
-      
+
       // Create the notification with the success message
       createNotification(notificationMessage);
 
@@ -106,7 +108,6 @@ const CreateCoursePage = () => {
           throw new Error(translations[lang].something_wrong);
         }
       }
-
 
       // Navigate after slight delay
       setTimeout(() => {
@@ -178,11 +179,13 @@ const CreateCoursePage = () => {
           </button>
         </div>
 
-        {loading && (
-          <div className="spinner-container">
-            <ClipLoader color="#27d887" loading={true} size={35} />
-          </div>
-        )}
+        {loading &&
+          createPortal(
+            <div className="spinner-container">
+              <ClipLoader color="#27d887" loading={true} size={35} />
+            </div>,
+            document.body
+          )}
       </div>
     </div>
   );

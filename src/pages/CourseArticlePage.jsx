@@ -1,18 +1,18 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { useNavigate, useLocation, useParams } from 'react-router-dom';
-import { marked } from 'marked';
-import { FaVolumeUp } from 'react-icons/fa';
-import { LanguageContext } from '../LanguageContext';
-import translations from '../translations.jsx';
-import { toast } from 'react-toastify'; // 📌 import toast!
+import React, { useEffect, useState, useContext } from "react";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
+import { marked } from "marked";
+import { FaVolumeUp } from "react-icons/fa";
+import { LanguageContext } from "../LanguageContext";
+import translations from "../translations.jsx";
+import { toast } from "react-toastify"; // 📌 import toast!
 
 const CourseArticlePage = () => {
   const { bengaliActive } = useContext(LanguageContext);
-  const lang = bengaliActive ? 'bn' : 'en';
+  const lang = bengaliActive ? "bn" : "en";
   const location = useLocation();
   const { courseID } = useParams();
   const course = location.state?.course;
-  const [articleHtml, setArticleHtml] = useState('');
+  const [articleHtml, setArticleHtml] = useState("");
   const [isSpeaking, setIsSpeaking] = useState(false);
   const navigate = useNavigate();
   const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
@@ -53,9 +53,10 @@ const CourseArticlePage = () => {
 
   useEffect(() => {
     if (!course || !course.article) return;
-    const htmlContent = bengaliActive && course.subject !== "English"
-      ? marked(course["article-bn"])
-      : marked(course.article);
+    const htmlContent =
+      bengaliActive && course.subject !== "English"
+        ? marked(course["article-bn"])
+        : marked(course.article);
     setArticleHtml(htmlContent);
   }, [course, bengaliActive]);
 
@@ -80,11 +81,12 @@ const CourseArticlePage = () => {
     stopSpeaking();
 
     try {
+      // Update score
       const res = await fetch(`${apiBaseUrl}/score/`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
         body: JSON.stringify({ delta_score: 10 }),
       });
@@ -94,35 +96,55 @@ const CourseArticlePage = () => {
         const totalScore = data.score;
         const message = `${translations[lang].toast_score_increased}${totalScore}`;
 
-        // Show the toast message
         toast.success(message);
-
-        // Create the notification with the same message
         createNotification(message);
-
       } else {
-        console.error('Failed to update score');
-        toast.error('Failed to update score');
+        console.error("Failed to update score");
+        toast.error("Failed to update score");
       }
-    } catch (err) {
-      console.error('Error updating score:', err);
-      toast.error('Error updating score');
-    }
 
-    navigate(`/flashcards/${courseID}`, { state: { course } });
+      // Update personal stat
+      try {
+        await fetch(`${apiBaseUrl}/personal-course-stats/${courseID}/`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: JSON.stringify({
+            articles_read: 1,
+          }),
+        });
+      } catch (err) {
+        console.error("Failed to update personal stat:", err);
+        toast.error("Could not update your course progress.");
+      }
+
+      // Navigate after all
+      navigate(`/flashcards/${courseID}`, { state: { course } });
+    } catch (err) {
+      console.error("Error updating score:", err);
+      toast.error("Something went wrong");
+    }
   };
 
   const speakArticle = () => {
     stopSpeaking();
 
-    const title = bengaliActive && course.subject !== "English" ? course["title-bn"] : course.title;
-    const contentText = document.querySelector('.article-text')?.innerText || '';
+    const title =
+      bengaliActive && course.subject !== "English"
+        ? course["title-bn"]
+        : course.title;
+    const contentText =
+      document.querySelector(".article-text")?.innerText || "";
     const textToSpeak = `${title}. ${contentText}`;
     const voice = bengaliActive ? "Bangla India Female" : "US English Female";
 
     if (!isSpeaking) {
       if (window.responsiveVoice) {
-        window.responsiveVoice.speak(textToSpeak, voice, { onend: () => setIsSpeaking(false) });
+        window.responsiveVoice.speak(textToSpeak, voice, {
+          onend: () => setIsSpeaking(false),
+        });
       } else if ("speechSynthesis" in window) {
         const utterance = new SpeechSynthesisUtterance(textToSpeak);
         utterance.lang = bengaliActive ? "bn-IN" : "en-US";
@@ -140,14 +162,20 @@ const CourseArticlePage = () => {
   return (
     <div className="course-article-page">
       <div className="article-header">
-        <h1>{bengaliActive && course.subject !== "English" ? course["title-bn"] : course.title}</h1>
+        <h1>
+          {bengaliActive && course.subject !== "English"
+            ? course["title-bn"]
+            : course.title}
+        </h1>
         <div className="meta-row">
-          <span className="class-box">Class: {localStorage.getItem('class')}</span>
+          <span className="class-box">
+            Class: {localStorage.getItem("class")}
+          </span>
           <div className="subject-sound">
             <span className="subject-box">{course.subject}</span>
             <button
               onClick={speakArticle}
-              className={`play-sound-btn ${isSpeaking ? 'active' : ''}`}
+              className={`play-sound-btn ${isSpeaking ? "active" : ""}`}
               title={isSpeaking ? "Stop" : "Play"}
             >
               <FaVolumeUp size={14} />
@@ -158,7 +186,10 @@ const CourseArticlePage = () => {
 
       <div className="article-content">
         <h2>{translations[lang].article}</h2>
-        <div className="article-text" dangerouslySetInnerHTML={{ __html: articleHtml }} />
+        <div
+          className="article-text"
+          dangerouslySetInnerHTML={{ __html: articleHtml }}
+        />
       </div>
 
       <div className="flashcards-btn">

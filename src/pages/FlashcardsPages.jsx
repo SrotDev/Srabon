@@ -1,18 +1,18 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { useParams, useNavigate, useLocation } from 'react-router-dom';
-import { marked } from 'marked';
-import { LanguageContext } from '../LanguageContext';
-import translations from '../translations.jsx';
+import React, { useState, useEffect, useContext } from "react";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
+import { marked } from "marked";
+import { LanguageContext } from "../LanguageContext";
+import translations from "../translations.jsx";
 
 const FlashcardsPage = () => {
   const { bengaliActive } = useContext(LanguageContext);
-  const lang = bengaliActive ? 'bn' : 'en';
+  const lang = bengaliActive ? "bn" : "en";
   const { courseID } = useParams();
   const location = useLocation();
   const course = location.state?.course;
 
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
-  const [flashcardHtml, setFlashcardHtml] = useState('');
+  const [flashcardHtml, setFlashcardHtml] = useState("");
   const navigate = useNavigate();
   const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 
@@ -36,15 +36,15 @@ const FlashcardsPage = () => {
       // 1️⃣ Update score by +1
       try {
         await fetch(`${apiBaseUrl}/score/`, {
-          method: 'POST',
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
           body: JSON.stringify({ delta_score: 1 }),
         });
       } catch (err) {
-        console.error('Failed to update score:', err);
+        console.error("Failed to update score:", err);
       }
 
       setCurrentCardIndex(currentCardIndex + 1);
@@ -56,22 +56,39 @@ const FlashcardsPage = () => {
       // 2️⃣ Update score by -1
       try {
         await fetch(`${apiBaseUrl}/score/`, {
-          method: 'POST',
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
           body: JSON.stringify({ delta_score: -1 }),
         });
       } catch (err) {
-        console.error('Failed to update score:', err);
+        console.error("Failed to update score:", err);
       }
 
       setCurrentCardIndex(currentCardIndex - 1);
     }
   };
 
-  const nextQuiz = () => {
+  const nextQuiz = async () => {
+    try {
+      await fetch(`${apiBaseUrl}/personal-course-stats/${courseID}/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({
+          flashcards_read: 1,
+        }),
+      });
+    } catch (err) {
+      console.error("Failed to update personal stat:", err);
+      toast.error("Could not update your course progress.");
+    }
+
+    // Always navigate to quiz, even if stat update fails
     navigate(`/quiz/${courseID}`, { state: { course } });
   };
 
@@ -80,7 +97,9 @@ const FlashcardsPage = () => {
       <div className="flashcards-header">
         <h1>{course.title}</h1>
         <div className="class-meta">
-          <span className="class-box">Class: {localStorage.getItem('class')}</span>
+          <span className="class-box">
+            Class: {localStorage.getItem("class")}
+          </span>
           <span className="subject-box">{course.subject}</span>
         </div>
       </div>
@@ -111,9 +130,7 @@ const FlashcardsPage = () => {
       </div>
 
       <div className="start-quiz-btn">
-        <button onClick={nextQuiz}>
-          {translations[lang].ready_quiz}
-        </button>
+        <button onClick={nextQuiz}>{translations[lang].ready_quiz}</button>
       </div>
     </div>
   );

@@ -10,6 +10,7 @@ const QuizSolutionPage = () => {
   const navigate = useNavigate();
 
   const { course, selectedAnswers, score } = location.state || {};
+  console.log("QuizSolutionPage selectedAnswers:", selectedAnswers);
 
   if (!course || !selectedAnswers) {
     return <div className="qs-loading">{translations[lang].load_quiz}</div>;
@@ -40,9 +41,10 @@ const QuizSolutionPage = () => {
         <div className="qs-content">
           {questions.map((q, qIndex) => {
             const correctAnswer = q.ans.trim().toLowerCase();
-            const selectedIndex = selectedAnswers[qIndex];
+            const selectedLetter = selectedAnswers[qIndex];
+            const selectedIndex = 'ABCD'.indexOf(selectedLetter);
             const selectedValue =
-              selectedIndex !== null
+              selectedLetter !== '0'
                 ? q[['option1', 'option2', 'option3', 'option4'][selectedIndex]]
                 : null;
 

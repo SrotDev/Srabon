@@ -3,6 +3,7 @@ import CourseCard from "./CourseCard";
 import ClipLoader from "react-spinners/ClipLoader";
 import { LanguageContext } from "../LanguageContext";
 import { FaSearch } from "react-icons/fa";
+import { createPortal } from "react-dom";
 
 const CourseList = () => {
   const { bengaliActive } = useContext(LanguageContext);
@@ -107,11 +108,11 @@ const CourseList = () => {
   };
 
   if (loading) {
-    return (
-      <div className="spinner-container">
-        <ClipLoader color="#27d887" loading={true} size={50} />
-      </div>
-    );
+    return createPortal(
+        <div className="spinner-container">
+          <ClipLoader color="#27d887" loading={true} size={50} />
+        </div>, document.body
+      );
   }
 
   return (

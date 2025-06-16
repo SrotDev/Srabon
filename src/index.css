@@ -12560,7 +12560,6 @@ a:hover {
   font-size: 0.75rem;
   font-weight: 600;
   color: #008080;
-  display: inline-block;
 }
 .course-card .course-body .tags .tagTwo {
   background: #f6f9f6;
@@ -12569,7 +12568,6 @@ a:hover {
   font-size: 0.75rem;
   font-weight: 600;
   color: #006400;
-  display: inline-block;
 }
 .course-card .course-body .title {
   font-size: 1.1rem;
@@ -12582,6 +12580,22 @@ a:hover {
   color: #666;
   margin-bottom: 1rem;
 }
+.course-card .course-body .progress {
+  margin-bottom: 1rem;
+}
+.course-card .course-body .progress .progress-bar {
+  width: 100%;
+  background: #e0e0e0;
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+}
+.course-card .course-body .progress .progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #27ae60, #1abc9c);
+  width: 0%;
+  transition: width 0.6s ease-in-out;
+}
 .course-card .course-body .start-btn {
   background-color: #006666;
   color: white;
@@ -12591,6 +12605,7 @@ a:hover {
   cursor: pointer;
   font-weight: 600;
   font-size: 0.9rem;
+  width: 100%;
 }
 .course-card .course-body .start-btn:hover {
   background-color: #009999;
@@ -12602,11 +12617,11 @@ a:hover {
   left: 0;
   width: 100vw;
   height: 100vh;
+  z-index: 9999;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: rgba(255, 255, 255, 0.7);
-  z-index: 9999;
 }
 
 .login-signup-page {
@@ -12859,6 +12874,9 @@ a:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   max-width: 1200px;
   margin: 50px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 .course-details .details-header {
   margin-bottom: 10px;
@@ -12905,15 +12923,6 @@ a:hover {
   background-color: #0056b3;
   color: #fff;
 }
-.course-details .course-meta .share-btn {
-  margin-left: auto;
-  background-color: #007bff;
-  color: white;
-  padding: 8px 16px;
-  border-radius: 5px;
-  border: none;
-  cursor: pointer;
-}
 .course-details .subtitle {
   font-size: 24px;
   color: #3b3b3b;
@@ -12921,6 +12930,9 @@ a:hover {
 }
 .course-details .course-content {
   margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 .course-details .course-content .description {
   font-size: 18px;
@@ -12936,13 +12948,96 @@ a:hover {
   border-radius: 10px;
   object-fit: cover;
 }
+.course-details .course-content .action-checklist {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 40%;
+  align-self: center;
+}
+.course-details .course-content .action-checklist .check-item {
+  border: 2px solid #e0e6f1;
+  border-left: 6px solid #9fdbfc;
+  border-radius: 12px;
+  padding: 16px 20px;
+  font-size: 16px;
+  background: linear-gradient(120deg, #ffffff, #f7faff);
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+  cursor: pointer;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease-in-out;
+}
+.course-details .course-content .action-checklist .check-item::before {
+  content: "☐";
+  font-size: 20px;
+  color: #aaa;
+  transition: color 0.3s ease;
+}
+.course-details .course-content .action-checklist .check-item.checked::before {
+  content: "☑";
+  color: #27ae60;
+}
+.course-details .course-content .action-checklist .check-item:hover {
+  background: linear-gradient(120deg, #e6f7ff, #ffffff);
+  transform: scale(1.015);
+  border-left-color: #2d9cdb;
+}
+.course-details .course-content .action-checklist .check-item:active {
+  transform: scale(0.98);
+}
+.course-details .course-content .divider {
+  margin: 40px 0 20px 0;
+  border: none;
+  border-top: 2px solid #333;
+  opacity: 0.1;
+  width: 100%;
+}
+.course-details .course-content .action-buttons {
+  width: 40%;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.course-details .course-content .action-buttons .action-box {
+  background-color: #ffffff;
+  color: #2c3e50;
+  border: none;
+  padding: 16px 24px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 500;
+  text-align: left;
+  width: 100%;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.07);
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.3s ease;
+}
+.course-details .course-content .action-buttons .action-box:hover {
+  background-color: #f3f9ff;
+  transform: translateY(-2px);
+}
+.course-details .course-content .action-buttons .action-box:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
 .course-details .buttons {
   display: flex;
   justify-content: space-between;
-  margin-top: 30px;
+  align-items: center;
+  margin-top: 40px;
+  width: 100%;
 }
-.course-details .buttons .enroll-btn,
+.course-details .buttons .share-btn,
 .course-details .buttons .all-courses-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   background-color: #007bff;
   color: white;
   padding: 15px 30px;
@@ -12952,8 +13047,15 @@ a:hover {
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
-.course-details .buttons .enroll-btn:hover,
-.course-details .buttons .all-courses-btn:hover {
+.course-details .buttons .share-btn svg,
+.course-details .buttons .all-courses-btn svg {
+  font-size: 18px;
+  vertical-align: middle;
+}
+.course-details .buttons .share-btn {
+  margin-left: auto;
+}
+.course-details .buttons .share-btn:hover {
   background-color: #0056b3;
 }
 .course-details .buttons .all-courses-btn {
@@ -14023,25 +14125,25 @@ a:hover {
     flex-wrap: wrap;
     gap: 12px;
   }
-  .course-details .course-meta .share-btn {
-    padding: 6px 12px;
-    font-size: 15px;
-  }
   .course-details .course-content .description {
     font-size: 17px;
   }
-  .course-details .course-content .description img.course-image {
+  .course-details .course-content .description .course-image {
     float: right;
     width: 45%;
     max-width: 45%;
     margin-left: 16px;
     margin-bottom: 10px;
   }
+  .course-details .course-content .action-checklist,
+  .course-details .course-content .action-buttons {
+    width: 80%;
+  }
   .course-details .buttons {
     flex-direction: row;
     gap: 10px;
   }
-  .course-details .enroll-btn,
+  .course-details .share-btn,
   .course-details .all-courses-btn {
     font-size: 16.5px;
     padding: 14px 24px;
@@ -14476,19 +14578,24 @@ a:hover {
   .course-content .description {
     font-size: 16px;
   }
-  .course-content .description img.course-image {
+  .course-content .description .course-image {
     float: none;
     display: block;
     width: 100%;
     max-width: 100%;
     margin: 15px auto;
   }
+  .course-content .action-checklist,
+  .course-content .action-buttons {
+    width: 100%;
+  }
   .buttons {
     flex-direction: column;
     align-items: center;
     gap: 15px;
   }
-  .enroll-btn, .all-courses-btn {
+  .buttons .share-btn,
+  .buttons .all-courses-btn {
     width: 100%;
     padding: 12px 20px;
     font-size: 16px;

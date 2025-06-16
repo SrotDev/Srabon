@@ -19,7 +19,7 @@ const createNotification = async (message) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`, // Use token for authentication
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({ message }),
     });
@@ -35,14 +35,13 @@ const QuizPage = () => {
   const location = useLocation();
   const course = location.state?.course;
   const navigate = useNavigate();
-  const [selectedAnswers, setSelectedAnswers] = useState(new Array(6).fill(null));
+  const [selectedAnswers, setSelectedAnswers] = useState(new Array(15).fill('0'));
   const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 
   if (!course) {
     return <div className="loading">{translations[lang].load_quiz}</div>;
   }
 
-  // 🟩 Use Bengali questions if conditions met
   const questions =
     bengaliActive && course.subject !== "English"
       ? course["questions-bn"]
@@ -50,7 +49,8 @@ const QuizPage = () => {
 
   const handleAnswerChange = (questionIndex, answerIndex) => {
     const updatedAnswers = [...selectedAnswers];
-    updatedAnswers[questionIndex] = answerIndex;
+    const letterMap = ['A', 'B', 'C', 'D'];
+    updatedAnswers[questionIndex] = letterMap[answerIndex];
     setSelectedAnswers(updatedAnswers);
   };
 
@@ -59,9 +59,11 @@ const QuizPage = () => {
     const total = questions.length;
     let score = 0;
 
-    selectedAnswers.forEach((answerIndex, index) => {
-      if (answerIndex !== null) {
-        const selectedValue = questions[index][['option1', 'option2', 'option3', 'option4'][answerIndex]];
+    selectedAnswers.forEach((answerLetter, index) => {
+      if (answerLetter !== '0') {
+        const optionIndex = 'ABCD'.indexOf(answerLetter);
+        const optionKey = ['option1', 'option2', 'option3', 'option4'][optionIndex];
+        const selectedValue = questions[index][optionKey];
         const correctAnswer = questions[index].ans;
 
         if (selectedValue.trim().toLowerCase() === correctAnswer.trim().toLowerCase()) {
@@ -70,14 +72,10 @@ const QuizPage = () => {
       }
     });
 
-    // 1️⃣ Show score toast
     const scoreMessage = `${translations[lang].your_score}${score}/${total}!`;
     toast.success(scoreMessage);
-
-    // 2️⃣ Create the notification with the score message
     createNotification(scoreMessage);
 
-    // 3️⃣ Update the user's total score via API
     try {
       const res = await fetch(`${apiBaseUrl}/score/`, {
         method: 'POST',
@@ -101,7 +99,23 @@ const QuizPage = () => {
       toast.error('Error updating score');
     }
 
-    // 4️⃣ Navigate to quiz solution page
+    try {
+      await fetch(`${apiBaseUrl}/personal-course-stats/${courseID}/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({
+          previous_answers: selectedAnswers.join(''),
+          quiz_score: score,
+        }),
+      });
+    } catch (err) {
+      console.error("Failed to update personal stat:", err);
+      toast.error("Could not update your course progress.");
+    }
+
     navigate(`/quizSolution/${courseID}`, {
       state: {
         course,
@@ -136,8 +150,8 @@ const QuizPage = () => {
                   <input
                     type="radio"
                     name={`question-${qIndex}`}
-                    value={index}
-                    checked={selectedAnswers[qIndex] === index}
+                    value={['A', 'B', 'C', 'D'][index]}
+                    checked={selectedAnswers[qIndex] === ['A', 'B', 'C', 'D'][index]}
                     onChange={() => handleAnswerChange(qIndex, index)}
                   />
                   {q[key]}

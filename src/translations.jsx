@@ -75,6 +75,13 @@ const translations = {
     "all_courses": "See All Courses",
     "start_course": "Start Course",
     "toast_score_increased": "Your score has increased! Total score: ",
+    "share_course": "Share Course",
+    "read_article_box": "Read a detailed Article on the course topic",
+    "read_flashcards_box": "Read Flashcards to memorize the key points",
+    "read_quiz_box": "Take a Quiz to test your knowledge",
+    "see_past_quizzes_box": "See your past quiz attempt results",
+    "download_pdf_box": "Download the course PDF for offline education",
+    "join_discussion_box": "Join the discussion community to share your thoughts and learn from others",
 
     // CoursesPage
     "grow_skill_1": "Grow up your skills",
@@ -188,6 +195,14 @@ const translations = {
     "all_courses": "সব কোর্স দেখো",
     "start_course": "কোর্স শুরু করো",
     "toast_score_increased": "তোমার স্কোর বৃদ্ধি পেয়েছে! মোট স্কোর: ",
+    "share_course": "কোর্স শেয়ার করো",
+    "read_article_box": "কোর্স বিষয়ের উপর একটি বিস্তারিত আর্টিকেল পড়ো",
+    "read_flashcards_box": "ফ্ল্যাশকার্ডগুলো পড়ে গুরুত্বপূর্ণ পয়েন্টগুলো মনে রাখো",
+    "read_quiz_box": "কুইজ নিয়ে তোমার জ্ঞান পরীক্ষা করো",
+    "see_past_quizzes_box": "তোমার পূর্ববর্তী কুইজের ফলাফল দেখো",
+    "download_pdf_box": "কোর্সের পিডিএফ ডাউনলোড করো অফলাইন শিক্ষার জন্য",
+    "join_discussion_box": "আলোচনা কমিউনিটিতে যোগ দাও, তোমার চিন্তা শেয়ার করো এবং অন্যদের থেকে শিখো",
+
 
     "grow_skill_1": "তোমার দক্ষতা বাড়াও",
     "grow_skill_2": "আমাদের কোর্সের মাধ্যমে",

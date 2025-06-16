@@ -143,27 +143,31 @@
     padding: 25px;
     margin: 40px 25px;
 
-    .details-header h1 { font-size: 30px; }
+    .details-header h1 {
+      font-size: 30px;
+    }
 
     .course-meta {
       flex-wrap: wrap;
       gap: 12px;
-
-      .share-btn {
-        padding: 6px 12px;
-        font-size: 15px;
-      }
     }
 
-    .course-content .description {
-      font-size: 17px;
+    .course-content {
+      .description {
+        font-size: 17px;
 
-      img.course-image {
-        float: right;
-        width: 45%;
-        max-width: 45%;
-        margin-left: 16px;
-        margin-bottom: 10px;
+        .course-image {
+          float: right;
+          width: 45%;
+          max-width: 45%;
+          margin-left: 16px;
+          margin-bottom: 10px;
+        }
+      }
+
+      .action-checklist,
+      .action-buttons {
+        width: 80%;
       }
     }
 
@@ -172,7 +176,7 @@
       gap: 10px;
     }
 
-    .enroll-btn,
+    .share-btn,
     .all-courses-btn {
       font-size: 16.5px;
       padding: 14px 24px;
